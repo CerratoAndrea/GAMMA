@@ -9,10 +9,10 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.its</groupId>
-	<artifactId>readchallenge</artifactId>
+	<artifactId>gamma</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>Read Challenge</name>
-	<description>Read Challenge</description>
+	<name>Gamma Read Challenga</name>
+	<description>Gamma Read Challenge</description>
 	
 	<properties>
 		<java.version>21</java.version>
