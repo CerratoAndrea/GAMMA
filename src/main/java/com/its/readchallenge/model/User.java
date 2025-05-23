@@ -11,6 +11,7 @@ public class User {
 	private String name; 
 	private String email;
 	private String password;
+	private int score;
 	private List<Challenge> challengeList = new ArrayList<Challenge>();
 	private List<Book> bookListread = new ArrayList<Book>();
 	private List<Book> bookListReading = new ArrayList<Book>();

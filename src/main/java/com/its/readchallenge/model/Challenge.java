@@ -1,6 +1,8 @@
 package com.its.readchallenge.model;
 
 import java.sql.Date;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Challenge {
 
@@ -9,6 +11,9 @@ public class Challenge {
 	private String description;
 	private Date start_date;
 	private Date end_date;
+	private List<User> challengeList = new ArrayList<User>();
+	private List<Book> bookListread = new ArrayList<Book>();
+	
 	
 	//Getters e setter della Challenge
 	public int getId_challenge() {
