@@ -1,42 +1,31 @@
 package com.its.readchallenge.model;
 
 import java.sql.Date;
-<<<<<<< HEAD
+
 
 public class Challenge {
 	
 	private int id ;
 	private String title;
-	private String Description;
+	private String description;
 	private Date startDate;
 	private Date endDate;
-=======
-import java.util.ArrayList;
-import java.util.List;
 
-public class Challenge {
 
-	private int id_challenge; 
-	private String name;
-	private String description;
-	private Date start_date;
-	private Date end_date;
-	private List<User> challengeList = new ArrayList<User>();
-	private List<Book> bookListread = new ArrayList<Book>();
 	
 	
 	//Getters e setter della Challenge
 	public int getId_challenge() {
-		return id_challenge;
+		return id;
 	}
 	public void setId_challenge(int id_challenge) {
-		this.id_challenge = id_challenge;
+		this.id = id;
 	}
 	public String getName() {
-		return name;
+		return title;
 	}
 	public void setName(String name) {
-		this.name = name;
+		this.title = name;
 	}
 	public String getDescription() {
 		return description;
@@ -45,18 +34,17 @@ public class Challenge {
 		this.description = description;
 	}
 	public Date getStart_date() {
-		return start_date;
+		return startDate;
 	}
 	public void setStart_date(Date start_date) {
-		this.start_date = start_date;
+		this.startDate = start_date;
 	}
 	public Date getEnd_date() {
-		return end_date;
+		return endDate;
 	}
 	public void setEnd_date(Date end_date) {
-		this.end_date = end_date;
+		this.endDate = end_date;
 	}
 	
->>>>>>> 6cbcfa8164a79bc47a23a7304d2dd9289e39d7b5
-	
+
 }

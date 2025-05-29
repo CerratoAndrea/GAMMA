@@ -12,37 +12,34 @@
 </head>
 
 <body>
-	<div class="d-flex flex-column min-vh-100 min-vw-100" >
-	    <div style="padding-bottom:30px;">
-	    	<nav class="navbar navbar-expand-sm navbar-dark bg-dark">
-			  <div class="container-fluid">
-			    <a class="navbar-brand" href="javascript:void(0)">Read Challenge</a>
-			    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mynavbar">
-			      <span class="navbar-toggler-icon"></span>
-			    </button>
+	    <div class="container-fluid pb-3 rounded">
+	    	<nav class="navbar navbar-expand-sm navbar-light bg-light border shadow-sm">
+			  <div class="container-fluid mx-auto">
+			    <img   src="img/Logo.png" alt="BookHub" width="50px" height="50px">			    
 			    <div class="collapse navbar-collapse" id="mynavbar">
-			      <ul class="navbar-nav me-auto">
-			        <li class="nav-item">
-			          <a class="nav-link" href="javascript:void(0)">Link</a>
+			      <ul class="navbar-nav me-auto p-1">
+			        <li class="nav-item p-1 ms-4">
+			          <a class="nav-link" href="javascript:void(0)"><strong>Libreria</strong></a>
 			        </li>
-			        <li class="nav-item">
-			          <a class="nav-link" href="javascript:void(0)">Link</a>
-			        </li>
-			        <li class="nav-item">
-			          <a class="nav-link" href="javascript:void(0)">Link</a>
+			        <li class="nav-item p-1 ms-4">
+			          <a class="nav-link" href="javascript:void(0)"><strong>Challenge</strong></a>
 			        </li>
 			      </ul>
-		      	  <ul class="navbar-nav ml-auto ">
+			      <ul class="navbar-nav me-auto p-1">
 			        <li class="nav-item">
-			          <a class="nav-link" href="javascript:void(0)">${user.username}</a>
+			          <input type="text" class="form-control" id="search" placeholder="Search...">
 			        </li>
-			        <li class="nav-item">
-			          <button type="submit" class="btn btn-primary">Logout</button>
+			      </ul>
+		      	  <ul class="navbar-nav ml-auto p-1">
+			        <li class="nav-item p-1">
+			          <a class="nav-link" href="javascript:void(0)"><strong>${name}</strong></a>
+			        </li>
+			        <li class="nav-item p-1 ms-4 me-2">
+			           <a class="nav-link" href="javascript:void(0)"><strong>Logout</strong></a>
 			        </li>
 			      </ul>
 			    </div>
 			  </div>
 			</nav>
 		</div>
-	    
 	
