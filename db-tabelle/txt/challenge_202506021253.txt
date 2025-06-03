@@ -1,0 +1,2 @@
+|id_challenge|descrizione|titolo|
+|------------|-----------|------|
