@@ -1,0 +1,1 @@
+Ho aggiornato le tabelle con nuovi attribute and ho fatto gli insert di libri, genere e tre utenti 
