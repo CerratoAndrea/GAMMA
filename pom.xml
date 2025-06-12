@@ -45,11 +45,11 @@
 		    <artifactId>jakarta.servlet.jsp.jstl-api</artifactId>
 		    <version>3.0.0</version>
 		</dependency>
-		<!--dependency>
+		<dependency>
 			<groupId>org.postgresql</groupId>
 			<artifactId>postgresql</artifactId>
 			<scope>runtime</scope>
-		</dependency-->
+		</dependency>
 	</dependencies>
 
 	<build>

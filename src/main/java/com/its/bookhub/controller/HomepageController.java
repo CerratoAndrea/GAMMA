@@ -7,64 +7,68 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.SessionAttributes;
 
 import com.its.bookhub.model.Book;
-import com.its.bookhub.service.LoginService;
+import com.its.bookhub.model.User;
+import com.its.bookhub.repository.BookRepository;
+
+import jakarta.servlet.http.HttpSession;
 
 @Controller
 public class HomepageController {
-
+	
+	@Autowired
+	BookRepository bookRepository;
+	
     @GetMapping("/homepage")
-    public String homepage(ModelMap model){
-    	System.out.println("homepage");
-        
-        Book b1 = new Book();
-        b1.setAuthor("George Orwell");
-        b1.setImage("1984.jpg");
-        b1.setTitle("1984");
-        
-        Book b2 = new Book();
-        b2.setAuthor("Dante Alighieri");
-        b2.setImage("divina_commedia.jpg");
-        b2.setTitle("La divina commedia");
-        
-        Book b3 = new Book();
-        b3.setAuthor("Umberto Eco");
-        b3.setImage("il_nome_della_rosa.jpg");
-        b3.setTitle("Il nome della rosa");
-        
-        Book b4 = new Book();
-        b4.setAuthor("Francis Scott Fitzgerald");
-        b4.setImage("The_Great_Gatsby.jpg");
-        b4.setTitle("Il grande Gatsby");
-        
-        List<Book> books = new ArrayList<Book>();
-        books.add(b1);
-        books.add(b2);
-        books.add(b3);
-        books.add(b4);
-        books.add(b4);
-        books.add(b3);
-        books.add(b1);
-        books.add(b2); 
-        books.add(b1);
-        books.add(b2);
-        books.add(b3);
-        books.add(b4);
-        
-        model.put("libBooks", books);
-        
-        List<Book> myBooks = new ArrayList<Book>();
-        myBooks.add(b1);
-        myBooks.add(b2);
-        
-        model.put("myBooks", myBooks);
-
-        System.out.println("fine homepage");
+    public String homepage(ModelMap model, HttpSession session, @RequestParam String title, @RequestParam String author){
+    	System.out.println("Hompage");
+    	List<Book> books = new ArrayList<Book>();
+    	
+    	if(isEmpty(author) && isEmpty(title)) {
+    		 books = bookRepository.findAll();    	
+    	}
+    	else if(!isEmpty(author) && !isEmpty(title)){
+    		 books = bookRepository.findByAuthorAndTitle(author, title);    	
+           
+    	}
+    	else if(isEmpty(author) && !isEmpty(title)) {
+    		 books = bookRepository.findByAuthor(author);    	
+            
+    	}
+    	else {
+    		 books = bookRepository.findByTitle(title);    	
+           
+    	}
+    	
+    	
+    	model.put("libBooks", books);
+    	
+//    	User user = (User)session.getAttribute("user");
+//    	
+//    	int bookCountRead = bookRepository.countReadBooks(true, user.getId() );
+//    	int bookCountReading = bookRepository.countReadBooks(false, user.getId());
+//    	
+//    	model.put("bookRead", bookCountRead);
+//    	model.put("bookReading", bookCountReading);
+//    	
+//        List<Book> myBooks = bookRepository.findByUser(user.getId());
+//        
+//        model.put("myBooks", myBooks);
+//
+//        System.out.println("fine homepage");
         return "homepage";
     }
-
+    
+    private boolean isEmpty(String value) {
+    	if(value == null || value.trim().equals("")) {
+    		return true;
+    	}
+    	return false;
+    }
+    
+    	
+    	
+    	
 }

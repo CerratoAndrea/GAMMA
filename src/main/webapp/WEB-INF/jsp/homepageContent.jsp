@@ -8,7 +8,7 @@
 				  <div class="card-header"><h4>Libreria BookHub</h4></div>
 				  <div class="card-body">
 					  <div class="container p-0">
-					  <form id ="searchForm" action="" method="post">
+					  <form id ="searchForm" action="homepage" method="post">
 					    <div class="row form-row pb-0 align-items-center" style="height:100px;">					      
    							<div class="col-4">
 						      <label for="titolo">Titolo</label>
@@ -54,12 +54,12 @@
 	  						<div class="row pb-0 mx-auto " style="height:100px;">
 	  							<div class="col-1"></div>
 	    						<div class="col-4 bg-light border rounded">
-	    							<p><h3 class="text-center">24</h3></p>
+	    							<p><h3 class="text-center">${bookRead}</h3></p>
 	    							<p><h6 class="text-center">LIBRI LETTI</h6></p>
 	    						</div>
 	    						<div class="col-2"></div>
 	    						<div class="col-4 bg-light border rounded">
-	    							<p><h3 class="text-center">3</h3></p>
+	    							<p><h3 class="text-center">${bookReading}</h3></p>
 	    							<p><h6 class="text-center">IN LETTURA</h6></p>
 	    						</div>
 	    						<div class="col-1"></div>

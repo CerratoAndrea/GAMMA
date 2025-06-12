@@ -30,7 +30,7 @@
 			      </ul>
 		      	  <ul class="navbar-nav ml-auto p-1">
 			        <li class="nav-item p-1">
-			          <a class="nav-link" href="user-profile"><strong><%= session.getAttribute("username") %></strong></a>
+			          <a class="nav-link" href="user-profile"><strong><%= ((User)session.getAttribute("user")).getName() %></strong></a>
 			        </li>
 			        <li class="nav-item p-1 ms-4 me-2">
 			           <a class="nav-link" href="logout"><strong>Logout</strong></a>

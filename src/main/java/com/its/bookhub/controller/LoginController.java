@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.its.bookhub.model.User;
 import com.its.bookhub.service.LoginService;
 
 import jakarta.servlet.http.HttpSession;
@@ -28,16 +29,16 @@ public class LoginController {
     @PostMapping("/login")
     public String login(ModelMap model, HttpSession session, @RequestParam String name, @RequestParam String password){
     	System.out.println("login");
-        boolean isValidUser = service.validateUser(name, password);
+        User user = service.validateUser(name, password);
 
-        if (!isValidUser) {
+        if (user == null) {
             model.put("errorMessage", "Credenziali errate");            
             return "loginPage";
         }
 
-        session.setAttribute("username", name);
+        session.setAttribute("user", user);
         
-        return homepageController.homepage(model);
+        return homepageController.homepage(model, session, null, null);
     }
     
     @GetMapping("/logout")

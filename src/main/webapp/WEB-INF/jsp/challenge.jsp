@@ -1,2 +1,2 @@
 <%@include file="navbar.jsp" %>
-<%@include file="challengeContent.jsp" %>
+<%@includke file="challengeContent.jsp" %>
