@@ -1,1 +1,0 @@
-Qui ci sono le tabelle del db in formato sql, txt e csv
