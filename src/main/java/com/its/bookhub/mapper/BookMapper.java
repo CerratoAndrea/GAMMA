@@ -1,12 +1,13 @@
-package com.its.readchallenge.mapper;
+package com.its.bookhub.mapper;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-import org.jspecify.annotations.Nullable;
 import org.springframework.jdbc.core.RowMapper;
 
-import com.its.readchallenge.model.Book;
+import com.its.bookhub.model.Book;
+
+import io.micrometer.common.lang.Nullable;
 
 public class BookMapper implements RowMapper<Book>{
 
@@ -15,7 +16,7 @@ public class BookMapper implements RowMapper<Book>{
 		Book book = new Book();
 		book.setAuthor(rs.getString("AUTHOR"));
 		book.setTitle(rs.getString("TITLE"));
-		book.setId(rs.getInt("ID"));
+		book.setId(rs.getLong("ID"));
 		
 		return book;
 	}

@@ -1,4 +1,4 @@
-package com.its.readchallenge.model;
+package com.its.bookhub.model;
 
 public class Genre {
 	

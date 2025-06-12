@@ -1,4 +1,4 @@
-package com.its.readchallenge.model;
+package com.its.bookhub.model;
 
 import java.sql.Date;
 
@@ -18,7 +18,7 @@ public class Challenge {
 	public int getId_challenge() {
 		return id;
 	}
-	public void setId_challenge(int id_challenge) {
+	public void setId_challenge(int id) {
 		this.id = id;
 	}
 	public String getName() {
