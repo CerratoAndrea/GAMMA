@@ -29,22 +29,25 @@ public class LoginController {
     @PostMapping("/login")
     public String login(ModelMap model, HttpSession session, @RequestParam String name, @RequestParam String password){
     	System.out.println("login");
-        User user = service.validateUser(name, password);
-
+        User user = service.validateUser(name, password);        
+        
         if (user == null) {
             model.put("errorMessage", "Credenziali errate");            
             return "loginPage";
         }
 
         session.setAttribute("user", user);
+        session.setAttribute("username", user.getName());
         
         return homepageController.homepage(model, session, null, null);
     }
     
-    @GetMapping("/logout")
-    public String logout(){
+    @PostMapping("/logout")
+    public String logout(HttpSession session){
     	System.out.println("logout");
         
+    	session.invalidate();
+    	
         return "loginPage";
     }
 
