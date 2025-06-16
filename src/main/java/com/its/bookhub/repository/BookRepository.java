@@ -7,6 +7,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
 import com.its.bookhub.mapper.BookMapper;
+import com.its.bookhub.mapper.UserBookMapper;
 import com.its.bookhub.model.Book;
 import com.its.bookhub.model.Genre;
 
@@ -16,92 +17,98 @@ public class BookRepository {
 	@Autowired
     private JdbcTemplate jdbcTemplate;
 	
-	public List<Book> findAll() {
-	 	String query = "SELECT * FROM BOOKS";		 	
-	 	List<Book> books = jdbcTemplate.query(query,
-                                              new BookMapper());
-	 	return books;
-	}
-	
 	public Book findById(long id) {
-	 	String query = "SELECT * FROM books WHERE ID = ?";		 	
+	 	String query = "SELECT * FROM BOOKS WHERE ID = ?";		 	
 	 	Book book = jdbcTemplate.queryForObject(query,
                 new BookMapper(),
                 new Object[]{id});
 	 	return book;
 	}
 	
-	public List<Book> findByTitle(String title) {
+	public List<Book> findAll(long id_utente) {
+	 	String query = "SELECT * FROM books AS b left join (select book_id, read from users_books WHERE user_id = ?) AS ub ON b.id = ub.book_id";		 	
+	 	List<Book> books = jdbcTemplate.query(query,
+                                              new UserBookMapper(),
+                                              new Object[]{id_utente});
+	 	return books;
+	}
+	
+	public List<Book> findByTitle(String title, long id_utente) {
 		if(title == null) {
-			return findAll();
+			return findAll(id_utente);
 		}
-	 	String query = "SELECT * FROM BOOKS WHERE LOWER(TITLE) LIKE '%?%'";	
+		String query = "SELECT * FROM books AS b left join (select book_id, read from users_books WHERE user_id = ?) AS ub ON b.id = ub.book_id "+
+                       "WHERE LOWER(b.TITLE) LIKE ?";	
 	 	
 	 	List<Book> books = jdbcTemplate.query(query,
-                new BookMapper(),
-	 			new Object[]{title.toLowerCase()});
+                new UserBookMapper(),
+	 			new Object[]{id_utente, "%" + title.toLowerCase() + "%"});
 	 	
 	 	return books;
 	} 
 	
-	public List<Book> findByAuthor(String author) {
+	public List<Book> findByAuthor(String author, long id_utente) {
 		if(author == null) {
-			return findAll();
+			return findAll( id_utente);
 		}
-	 	String query = "SELECT * FROM BOOKS WHERE LOWER(AUTHOR) LIKE '%?%'";		 	
+		String query = "SELECT * FROM books AS b left join (select book_id, read from users_books WHERE user_id = ?) AS ub ON b.id = ub.book_id "+
+                       "WHERE LOWER(b.AUTHOR) LIKE ?";		 	
 	 	List<Book> books = jdbcTemplate.query(query,
-                new BookMapper(),
-	 			new Object[]{author.toLowerCase()});
+                new UserBookMapper(),
+	 			new Object[]{id_utente, "%" + author.toLowerCase() + "%"});
 	 	return books;
 	} 
 	
-	public List<Book> findByAuthorAndTitle(String author, String title) {
-	 	String query = "SELECT * FROM BOOKS WHERE LOWER(AUTHOR) LIKE '%?%' AND LOWER(TITLE) LIKE '%?%'";		 	
+	public List<Book> findByAuthorAndTitle(String author, String title, Long id_utente) {
+	 	String query = "SELECT * FROM books AS b left join (select book_id, read from users_books WHERE user_id = ?) AS ub ON b.id = ub.book_id "+
+	                   "WHERE LOWER(b.AUTHOR) LIKE ? AND LOWER(b.TITLE) LIKE ?";		 	
 	 	List<Book> books = jdbcTemplate.query(query,
-                new BookMapper(),
-	 			new Object[]{author.toLowerCase(), title.toLowerCase()});
+                new UserBookMapper(),
+	 			new Object[]{id_utente, "%" + author.toLowerCase() + "%", "%" + title.toLowerCase() + "%"});
 	 	return books;
 	} 
 	
-	public List<Book> findByUser(long id_utente/* boolean read*/) {
+	public List<Book> findByUser(long id_utente) {
 		
-			String query = "SELECT * FROM BOOKS WHERE ID_LIBRO IN (SELECT ID_LIBRO FROM UTENTE_LIBRO WHERE ID_UTENTE = ?)";	
+			String query = "SELECT * FROM books AS b join users_books AS ub ON b.id = ub.book_id WHERE ub.user_id = ?";	
 		 	List<Book> books =  jdbcTemplate.query(query,
-		 										   new BookMapper(),
+		 										   new UserBookMapper(),
 		 										   new Object[]{id_utente});
 		 	return books;
-//			String query = "SELECT * FROM BOOKS WHERE ID_LIBRO IN (SELECT * FROM UTENTE_LIBRO WHERE LOWER(ID_UTENTE) = ? AND LETTO_INLETTURA = FALSE)";	
-//		 	List<Book> books =  jdbcTemplate.query(query,
-//		 										   new BookMapper());
-//		 	return books;
 	} 
 	
 	public int countReadBooks(boolean read, Long userid) {
 		
-	 	String query = "SELECT COUNT(*) FROM UTENTE_LIBRO WHERE ID_UTENTE = ?  AND LETTO_INLETTURA = ?";	
+	 	String query = "SELECT COUNT(*) FROM USERS_BOOKS WHERE USER_ID = ?  AND READ = ?";	
 	 	int books =  jdbcTemplate.queryForObject(query, Integer.class, new Object[]{userid, read});
 	 	
 	 	return books;
 	} 
 	
-	public List<Book> findByGenre(Genre genres) {
+	/*public List<Book> findByGenre(Genre genres) {
 		
 	 	String query = "SELECT * FROM BOOKS_GENRES WHERE GENRE = ?";	
 	 	List<Book> books =  jdbcTemplate.query(query,
 	 										   new BookMapper());
 	 	return books;
-	} 
+	} */
 	
-	public int insertBookReading(Book book, boolean read) {
-	 	String query = "INSERT INTO USER_BOOK(title, author, read) values(?,?,?)";
+	public int insertBookReading(Long userId,Long bookId, Boolean read) {
+	 	String query = "INSERT INTO users_books (user_id, book_id, read) VALUES (?, ?, ?)";
 	 		return jdbcTemplate.update(query,
- 				   book.getTitle(), book.getAuthor(), read );
+ 				   userId, bookId, read );
         
 	}
-	public int updateBookReading(Book book, boolean read) {
-		 String query = "UPDATE BOOK SET READ = ? WHERE ID = ?";
+	public int removeBookReading(Long userId,Long bookId) {
+	 	String query = "DELETE FROM users_books WHERE USER_ID = ? AND BOOK_ID = ?";
+	 		return jdbcTemplate.update(query,
+ 				   userId, bookId);
+        
+	}
+	public int updateBookReading(Long bookId, boolean read) {
+		 String query = "UPDATE USERS_BOOKS SET READ = ? WHERE BOOK_ID = ?";
 	     return jdbcTemplate.update(query,
-	                                  read, book.getId() );
+	                                  read, bookId );
 	 }
 	
 	

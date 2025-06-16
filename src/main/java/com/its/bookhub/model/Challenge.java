@@ -5,7 +5,7 @@ import java.sql.Date;
 
 public class Challenge {
 	
-	private int id ;
+	private long id ;
 	private String title;
 	private String description;
 	private Date startDate;
@@ -15,10 +15,10 @@ public class Challenge {
 	
 	
 	//Getters e setter della Challenge
-	public int getId_challenge() {
+	public long getId_challenge() {
 		return id;
 	}
-	public void setId_challenge(int id) {
+	public void setId_challenge(long id) {
 		this.id = id;
 	}
 	public String getName() {
