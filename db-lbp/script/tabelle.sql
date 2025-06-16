@@ -17,6 +17,7 @@ create table book (
 	descrizione text,
 	copertina varchar,
 	pagine int,
+	anno_pubblicazione varchar(100),
 	
 	constraint book_pk primary key (id_book)
 );
@@ -84,6 +85,7 @@ create table book_genere(
 create table utente_book (
 	id_utente int,
 	id_book int,
+	letto boolean,
 	
 	constraint book_fk foreign key (id_book)
 		references book(id_book),
