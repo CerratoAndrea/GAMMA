@@ -18,14 +18,18 @@
 	    <div class="container-fluid pb-3 rounded">
 	    	<nav class="navbar navbar-expand-sm navbar-light bg-light border shadow-sm">
 			  <div class="container-fluid mx-auto">
-			    <img   src="<c:url value='/img/Logo.png'/>" alt="BookHub" width="60px" height="60px" border=1>			    
+			    <img   src="img/Logo.png" alt="BookHub" width="60px" height="60px" border=1>			    
 			    <div class="collapse navbar-collapse" id="mynavbar">
 			      <ul class="navbar-nav me-auto p-1">			      
 			        <li class="nav-item p-1 ms-4">
 			          <a class="nav-link" href="homepage"><strong>Libreria</strong></a>
 			        </li>
-			        <li class="nav-item p-1 ms-4">
-			          <a class="nav-link" href="challenge"><strong>Challenge</strong></a>
+			        <li class="nav-item dropdown p-1 ms-4">
+			          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false"><strong>Challenge</strong></a>
+			          <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+			            <li><a class="dropdown-item" href="challenge"><strong>Classifiche</strong></a></li>
+			            <li><a class="dropdown-item" href="createChallenge"><strong>Crea una challenge</strong></a></li>
+			          </ul>			          
 			        </li>
 			      </ul>
 		      	  <ul class="navbar-nav ml-auto p-1">

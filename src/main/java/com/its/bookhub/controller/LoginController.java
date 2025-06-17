@@ -50,5 +50,9 @@ public class LoginController {
     	
         return "loginPage";
     }
-
+    @GetMapping("/register")
+    public String showRegisterPage(ModelMap model){
+        return "registerPage";
+    }
+    
 }
