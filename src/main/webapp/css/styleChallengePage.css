@@ -1,0 +1,270 @@
+
+.container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); /* Rende i blocchi responsive */
+    gap: 20px; /* Spazio tra i rettangoli */
+    max-width: 1200px; /* Limita la larghezza massima del contenitore */
+    width: 100%;
+}
+
+.book-card {
+    background-color: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    overflow: hidden; /* Assicura che i bordi arrotondati vengano rispettati */
+    position: relative; /* Per posizionare le icone e il badge */
+    text-decoration: none; /* Rimuove la sottolineatura dai link */
+    color: inherit; /* Mantiene il colore del testo */
+    display: flex;
+    flex-direction: column;
+    transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+}
+
+.book-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+
+/* Colori di sfondo dei header */
+.card-header.green {
+    background-color: #4CAF50; 
+}
+
+.card-header.gray {
+    background-color: #607D8B; 
+}
+
+.badge {
+    background-color: rgba(0, 0, 0, 0.2);
+    color: #fff;
+    padding: 3px 8px;
+    border-radius: 12px;
+    font-size: 0.8em;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.badge.red {
+    background-color: #e53935; /* Rosso per il badge "50" */
+}
+
+.badge i {
+    /* Per le icone FontAwesome */
+    font-size: 1em;
+}
+
+.card-title {
+    font-size: 1.2em;
+    font-weight: 600;
+    padding: 15px 20px;
+    color: #333; /* Colore del testo per il titolo */
+}
+
+/* Stili per dividere la pagina in due */
+ 
+        #left-panel {
+            flex: 1; /* Occupa metà dello spazio disponibile */
+            padding: 20px;
+            overflow-y: auto; /* Aggiungi scroll se il contenuto è troppo lungo */
+            border-right: 1px solid #eee; /* Bordo per separare le due sezioni */
+        }
+
+        #right-panel {
+            flex: 1; /* Occupa l'altra metà dello spazio disponibile */
+            padding: 20px;
+            overflow-y: auto; /* Aggiungi scroll se il contenuto è troppo lungo */
+            background-color: #f8f9fa; /* Un leggero colore di sfondo per la parte destra */
+        }
+
+        /* Stili per le card delle challenge */
+        .container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            justify-content: center;
+        }
+
+        .book-card {
+            display: block;
+            width: 250px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            overflow: hidden;
+            text-decoration: none;
+            color: #333;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .book-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+        }
+
+        .card-header.green {
+            background-color: #28a745; /* Bootstrap green */
+        }
+
+        .card-header.gray {
+            background-color: #6c757d; /* Bootstrap gray */
+        }
+
+        .badge {
+            background-color: rgba(255, 255, 255, 0.3);
+            border-radius: 4px;
+            padding: 3px 8px;
+            font-weight: 600;
+        }
+
+        .badge.red {
+            background-color: #dc3545; /* Bootstrap red */
+        }
+
+        .card-title {
+            padding: 15px;
+            font-size: 1.2em;
+            font-weight: 600;
+            text-align: center;
+            background-color: #ffffff;
+        }
+
+        /* Stili per il modal */
+        .modal-header {
+            background-color: #007bff;
+            color: white;
+            border-top-left-radius: 0.3rem;
+            border-top-right-radius: 0.3rem;
+        }
+
+        .modal-title {
+            color: white;
+        }
+
+        .modal-body {
+            font-size: 1.1em;
+            line-height: 1.6;
+        }
+
+        .modal-footer {
+            border-top: 1px solid #dee2e6;
+            padding: 1rem;
+            justify-content: flex-end;
+        }
+
+        /* Nuovi stili per la classifica */
+        .leaderboard-card {
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+            padding: 0; /* Rimuovi padding per controllo interno */
+            overflow: hidden; /* Assicura che i bordi arrotondati funzionino */
+        }
+
+        .leaderboard-title {
+            font-size: 1.5em;
+            font-weight: 600;
+            padding: 15px 20px;
+            border-bottom: 1px solid #eee;
+            background-color: #fff;
+        }
+
+        .leaderboard-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .leaderboard-item {
+            display: flex;
+            align-items: center;
+            padding: 15px 20px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .leaderboard-item:last-child {
+            border-bottom: none; /* Rimuovi il bordo dall'ultimo elemento */
+        }
+
+        .leaderboard-rank {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-weight: bold;
+            color: white;
+            margin-right: 15px;
+            flex-shrink: 0; /* Non permettere che il rank si restringa */
+        }
+
+        .leaderboard-rank.gold {
+            background-color: #ffc107; /* Giallo oro */
+        }
+
+        .leaderboard-rank.silver {
+            background-color: #6c757d; /* Grigio argento */
+        }
+
+        .leaderboard-rank.bronze {
+            background-color: #fd7e14; /* Arancione bronzo */
+        }
+
+        .leaderboard-rank.default {
+            background-color: #0d6efd; /* Blu predefinito (per le posizioni successive) */
+        }
+
+        .leaderboard-info {
+            flex-grow: 1; /* Occupa lo spazio rimanente */
+        }
+
+        .leaderboard-name {
+            font-weight: 600;
+            font-size: 1.1em;
+            color: #333;
+        }
+
+        .leaderboard-score {
+            font-weight: bold;
+            font-size: 1.2em;
+            color: #212529;
+            flex-shrink: 0; /* Non permettere che il punteggio si restringa */
+        }
+
+
+        /* Stili base per l'header della card */
+.card-header {
+    background-color: #f8f9fa; /* Grigio chiaro di default (Bootstrap) */
+    padding: 10px 15px;
+    border-bottom: 1px solid #dee2e6;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-radius: 5px 5px 0 0;
+}
+
+/* Stile per la card completata (verde) */
+.book-card.completed .card-header {
+    background-color: #28a745; /* Verde di Bootstrap */
+    color: white; /* Testo bianco per contrasto */
+}
+
+/* Assicurati che i badge all'interno della card completata siano leggibili */
+.book-card.completed .card-header .badge {
+    color: #28a745; /* Colore del testo del badge all'interno dell'header verde */
+    background-color: white; /* Sfondo bianco per il badge */
+}
+
+/* Stile per i badge all'interno delle card non completate */
+.book-card .card-header .badge {
+    color: #495057; /* Colore scuro per il testo del badge */
+    background-color: #e9ecef; /* Sfondo grigio chiaro per il badge */
+}
+
+.book-card .card-header .badge.red {
+    background-color: #dc3545; /* Rosso per il badge punteggio, se lo vuoi specifico */
+    color: white;
+}
