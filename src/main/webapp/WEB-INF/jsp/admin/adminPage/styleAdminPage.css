@@ -1,12 +1,17 @@
 :root {
-    --primary-color: #007bff;
-    --danger-color: #dc3545;
-    --background-color: #f4f4f4;
-    --shadow: 0 2px 8px rgba(0,0,0,0.15);
-    --border-radius: 8px;
-    --spacing-sm: 8px;
-    --spacing-md: 15px;
-    --spacing-lg: 30px;
+    --primary-color: #4a90e2;
+    --primary-hover: #357abd;
+    --danger-color: #e74c3c;
+    --danger-hover: #c0392b;
+    --background-color: #f8f9fa;
+    --text-color: #2c3e50;
+    --text-muted: #7f8c8d;
+    --shadow: 0 4px 6px rgba(0,0,0,0.1), 0 1px 3px rgba(0,0,0,0.08);
+    --shadow-hover: 0 7px 14px rgba(0,0,0,0.1), 0 3px 6px rgba(0,0,0,0.08);
+    --border-radius: 12px;
+    --spacing-sm: 10px;
+    --spacing-md: 20px;
+    --spacing-lg: 40px;
 }
 
 * {
@@ -16,15 +21,15 @@
 }
 
 body {
-    font-family: 'Segoe UI', Arial, sans-serif;
-    line-height: 1.6;
+    font-family: 'Inter', 'Segoe UI', Arial, sans-serif;
+    line-height: 1.7;
     padding: var(--spacing-md);
     background: var(--background-color);
-    color: #333;
+    color: var(--text-color);
 }
 
 .container {
-    max-width: 1200px;
+    max-width: 1400px;
     margin: 0 auto;
     padding: 0 var(--spacing-md);
 }
@@ -33,6 +38,19 @@ body {
     text-align: center;
     margin-bottom: var(--spacing-lg);
     padding: var(--spacing-lg) 0;
+    position: relative;
+}
+
+.header::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 60px;
+    height: 4px;
+    background: var(--primary-color);
+    border-radius: 2px;
 }
 
 .book-form {
@@ -41,11 +59,13 @@ body {
     border-radius: var(--border-radius);
     box-shadow: var(--shadow);
     margin-bottom: var(--spacing-lg);
-    transition: transform 0.2s ease;
+    transition: all 0.3s ease;
+    border: 1px solid rgba(0,0,0,0.08);
 }
 
 .book-form:hover {
-    transform: translateY(-2px);
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-hover);
 }
 
 .form-group {
@@ -55,37 +75,42 @@ body {
 .form-group label {
     display: block;
     margin-bottom: var(--spacing-sm);
-    font-weight: 500;
-    color: #444;
+    font-weight: 600;
+    color: var(--text-color);
+    font-size: 0.95rem;
 }
 
 .form-group input, 
 .form-group textarea {
     width: 100%;
-    padding: var(--spacing-sm);
-    border: 2px solid #ddd;
+    padding: 12px var(--spacing-md);
+    border: 2px solid #e1e8ed;
     border-radius: var(--border-radius);
-    transition: border-color 0.3s ease;
+    transition: all 0.3s ease;
+    font-size: 1rem;
+    color: var(--text-color);
 }
 
 .form-group input:focus, 
 .form-group textarea:focus {
     outline: none;
     border-color: var(--primary-color);
+    box-shadow: 0 0 0 3px rgba(74, 144, 226, 0.1);
 }
 
 .btn {
-    padding: 12px 24px;
+    padding: 14px 28px;
     border: none;
     border-radius: var(--border-radius);
     cursor: pointer;
-    font-size: 16px;
+    font-size: 1rem;
     font-weight: 600;
     transition: all 0.3s ease;
+    letter-spacing: 0.5px;
 }
 
 .btn:hover {
-    transform: translateY(-1px);
+    transform: translateY(-2px);
     box-shadow: var(--shadow);
 }
 
@@ -95,7 +120,7 @@ body {
 }
 
 .btn-primary:hover {
-    background: #0056b3;
+    background: var(--primary-hover);
 }
 
 .btn-danger {
@@ -104,12 +129,12 @@ body {
 }
 
 .btn-danger:hover {
-    background: #c82333;
+    background: var(--danger-hover);
 }
 
 .books-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
     gap: var(--spacing-lg);
 }
 
@@ -118,11 +143,26 @@ body {
     padding: var(--spacing-lg);
     border-radius: var(--border-radius);
     box-shadow: var(--shadow);
-    transition: transform 0.2s ease;
+    transition: all 0.3s ease;
+    border: 1px solid rgba(0,0,0,0.08);
+    position: relative;
+    overflow: hidden;
 }
 
 .book-card:hover {
-    transform: translateY(-3px);
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-hover);
+}
+
+.book-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 4px;
+    height: 100%;
+    background: var(--primary-color);
+    opacity: 0.7;
 }
 
 @media (max-width: 768px) {
@@ -148,5 +188,10 @@ body {
     .btn {
         width: 100%;
         margin-bottom: var(--spacing-sm);
+        padding: 12px 20px;
+    }
+    
+    .header::after {
+        width: 40px;
     }
 }
