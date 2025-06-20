@@ -3,83 +3,97 @@ class BookManager {
         // Carica i libri dal localStorage o inizializza un array vuoto
         this.books = JSON.parse(localStorage.getItem('books')) || [];
 
-        // Seleziona il modulo HTML per l'inserimento dei libri
+        // Seleziona il form HTML per l'inserimento dei libri
         this.form = document.getElementById('bookForm');
 
-        // Seleziona il contenitore dove verranno mostrati i libri
+        // Seleziona il contenitore dove verranno visualizzati i libri
+        // Assicurati che questo ID corrisponda al contenitore previsto nel tuo HTML
         this.booksContainer = document.getElementById('booksContainer');
 
-        // Imposta gli event listener per il modulo
+        // Configura i listener degli eventi per il form e le azioni sui libri
         this.setupEventListeners();
 
-        // Mostra i libri salvati nella pagina
+        // Visualizza i libri salvati al caricamento della pagina
         this.renderBooks();
-
-        this.editBook();
-
-        this.deleteBook();
     }
 
     setupEventListeners() {
-        // Quando il modulo viene inviato, impedisce il comportamento predefinito e salva il libro
+        // Quando il form viene inviato, previeni il comportamento predefinito e salva il libro
         this.form.addEventListener('submit', (e) => {
-            e.preventDefault();
+            e.preventDefault(); // Previene l'invio predefinito del form (ricarica della pagina)
             this.saveBook();
+        });
+
+        // Usa la delegazione degli eventi per i pulsanti di modifica ed eliminazione nel booksContainer
+        this.booksContainer.addEventListener('click', (e) => {
+            // Controlla se l'elemento cliccato è un pulsante di modifica
+            if (e.target.classList.contains('edit-btn')) {
+                const bookId = e.target.dataset.id; // Ottieni l'ID del libro dall'attributo data-id
+                this.fillFormForEdit(bookId);
+            }
+            // Controlla se l'elemento cliccato è un pulsante di eliminazione
+            else if (e.target.classList.contains('delete-btn')) {
+                const bookId = e.target.dataset.id; // Ottieni l'ID del libro dall'attributo data-id
+                this.deleteBook(bookId);
+            }
         });
     }
 
     saveBook() {
-        // Ottiene i valori dal modulo
+        // Ottieni i valori dai campi del form
         const bookId = document.getElementById('bookId').value;
         const book = {
-            id: bookId || Date.now().toString(), // Usa un ID esistente o ne genera uno nuovo
+            id: bookId || Date.now().toString(), // Usa l'ID esistente o genera un nuovo ID univoco
             title: document.getElementById('title').value,
             author: document.getElementById('author').value,
             description: document.getElementById('description').value,
-            page: document.getElementById('page').value,
-            pubblication: document.getElementById('pubblication').value
+            pages: parseInt(document.getElementById('pages').value), // Converti in numero
+            publicationYear: parseInt(document.getElementById('publicationYear').value) // Converti in numero
         };
 
-        // Se l'ID esiste, aggiorna il libro esistente, altrimenti aggiunge un nuovo libro
+        // Se esiste un ID, aggiorna il libro esistente; altrimenti, aggiungi un nuovo libro
         if (bookId) {
             const index = this.books.findIndex(b => b.id === bookId);
-            this.books[index] = book;
+            if (index !== -1) {
+                this.books[index] = book;
+            }
         } else {
             this.books.push(book);
         }
 
-        // Salva i dati aggiornati e aggiorna la visualizzazione
+        // Salva i dati aggiornati nel localStorage e aggiorna la visualizzazione
         this.updateStorage();
         this.renderBooks();
-        this.resetForm();
+        this.resetForm(); // Pulisci il form dopo il salvataggio
     }
 
-    editBook(id) {
-        // Trova il libro da modificare e riempie il modulo con i suoi dati
+    fillFormForEdit(id) {
+        // Trova il libro da modificare e popola il form con i suoi dati
         const book = this.books.find(b => b.id === id);
-        document.getElementById('bookId').value = book.id;
-        document.getElementById('title').value = book.title;
-        document.getElementById('author').value = book.author;
-        document.getElementById('description').value = book.description;
-        document.getElementById('page').value = book.page;
-        document.getElementById('pubblication').value = book.pubblication;
-
-        // Mostra un messaggio di conferma
-        alert('Libro modificato con successo');
+        if (book) {
+            document.getElementById('bookId').value = book.id;
+            document.getElementById('title').value = book.title;
+            document.getElementById('author').value = book.author;
+            document.getElementById('description').value = book.description;
+            document.getElementById('pages').value = book.pages;
+            document.getElementById('publicationYear').value = book.publicationYear;
+            // Opzionalmente, scorri fino al form dopo averlo riempito
+            this.form.scrollIntoView({ behavior: 'smooth' });
+        } else {
+            console.error(`Libro con ID ${id} non trovato.`);
+        }
     }
 
     deleteBook(id) {
-        // Chiede conferma all'utente prima di eliminare il libro
+        // Chiedi conferma all'utente prima di eliminare
         if (confirm('Sei sicuro di voler eliminare questo libro?')) {
-            // Rimuove il libro con l'ID corrispondente
+            // Rimuovi il libro con l'ID corrispondente
             this.books = this.books.filter(book => book.id !== id);
 
-            // Aggiorna il localStorage e la visualizzazione
+            // Aggiorna il localStorage e aggiorna la visualizzazione
             this.updateStorage();
             this.renderBooks();
-
-            // Mostra un messaggio di conferma
-            alert('Libro eliminato con successo');
+            alert('Libro eliminato con successo!');
         }
     }
 
@@ -89,32 +103,43 @@ class BookManager {
     }
 
     resetForm() {
-        // Svuota tutti i campi del modulo e reimposta lo stato iniziale
-        document.getElementById('bookId').value = '';
-        document.getElementById('title').value = '';
-        document.getElementById('author').value = '';
-        document.getElementById('description').value = '';
-        document.getElementById('page').value = '';
-        document.getElementById('pubblication').value = '';
-        this.form.reset();
-        document.getElementById('title').focus();
+        // Pulisci tutti i campi del form e ripristina lo stato iniziale
+        document.getElementById('bookId').value = ''; // Pulisci il campo ID nascosto
+        this.form.reset(); // Reimposta tutti i campi del form
+        document.getElementById('title').focus(); // Imposta il focus sul campo del titolo
     }
 
     renderBooks() {
-        // Genera l'HTML per ogni libro e lo inserisce nel contenitore
-        this.booksContainer.innerHTML = this.books.map(book => `
-            <div class="book-card">
+        // Pulisci il contenuto attuale del contenitore dei libri
+        this.booksContainer.innerHTML = '';
+
+        // Se non ci sono libri, mostra un messaggio
+        if (this.books.length === 0) {
+            this.booksContainer.innerHTML = '<p class="no-books-message">Nessun libro presente. Aggiungi un nuovo libro utilizzando il modulo sopra.</p>';
+            return;
+        }
+
+        // Genera l'HTML per ogni libro e inseriscilo nel contenitore
+        const booksHtml = this.books.map(book => `
+            <div class="book-card" data-id="${book.id}">
                 <h3>${book.title}</h3>
                 <p><strong>Autore:</strong> ${book.author}</p>
                 <p><strong>Descrizione:</strong> ${book.description}</p>
-                <p><strong>Pagine:</strong> ${book.page}</p>
-                <p><strong>Anno Pubblicazione:</strong> ${book.pubblication}</p>
-                <button onclick="bookManager.editBook('${book.id}')" class="btn btn-primary">Edit</button>
-                <button onclick="bookManager.deleteBook('${book.id}')" class="btn btn-danger">Delete</button>
+                <p><strong>Pagine:</strong> ${book.pages}</p>
+                <p><strong>Anno Pubblicazione:</strong> ${book.publicationYear}</p>
+                <div class="book-actions">
+                    <button class="btn btn-primary edit-btn" data-id="${book.id}">Modifica</button>
+                    <button class="btn btn-danger delete-btn" data-id="${book.id}">Elimina</button>
+                </div>
             </div>
-        `).join('');
+        `).join(''); // Unisci tutte le stringhe HTML insieme
+
+        this.booksContainer.innerHTML = booksHtml;
     }
 }
 
-// Crea un'istanza della classe BookManager per avviare l'app
-const bookManager = new BookManager();
+// Crea un'istanza della classe BookManager per avviare l'applicazione
+// Questo assicura che la classe venga eseguita non appena il DOM è caricato
+document.addEventListener('DOMContentLoaded', () => {
+    const bookManager = new BookManager();
+});
