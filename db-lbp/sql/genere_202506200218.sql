@@ -1,7 +1,7 @@
-INSERT INTO public.genere (nome_genere) VALUES
+INSERT INTO lbp.genere (nome_genere) VALUES
 	 ('Romanzo'),
 	 ('Fantasy'),
-	 ('Sci-Fi'),
+	 ('Sci-fi'),
 	 ('Thriller'),
 	 ('Horror'),
 	 ('Giallo'),

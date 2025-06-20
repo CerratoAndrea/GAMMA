@@ -40,6 +40,7 @@
 	  </div>
 	</div>
 	
+	<!-- JS -->>
 	<script type="text/javascript">
 		$('#loginButton').on('click', function (e) {	
 		    e.preventDefault();

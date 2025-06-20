@@ -1,10 +1,10 @@
 <!-- JSTL core and functions taglibs -->
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
-	    
+
 <!-- Main container -->
 <div class="container-fluid pb-1">
-	    
+
 <!-- Book details modal -->		
 <div class="modal fade" id="dettaglioLibro" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered" role="document">

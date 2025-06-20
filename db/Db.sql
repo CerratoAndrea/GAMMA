@@ -1,8 +1,8 @@
--- Create users table to store user information
--- id: auto-incrementing primary key
--- username: user's display name (max 200 chars)
--- password: hashed password (max 100 chars)
--- email: user's email address (max 200 chars)
+-- Crea la tabella users per memorizzare le informazioni degli utenti
+-- id: chiave primaria auto-incrementante
+-- username: nome visualizzato dell'utente (max 200 caratteri)
+-- password: password crittografata (max 100 caratteri)
+-- email: indirizzo email dell'utente (max 200 caratteri)
 CREATE TABLE users (
     id SERIAL,
     username VARCHAR(200),
@@ -11,14 +11,14 @@ CREATE TABLE users (
     CONSTRAINT users_pk PRIMARY KEY (id)
 );
 
--- Create books table to store book information
--- id: auto-incrementing primary key
--- title: book title (max 200 chars)
--- author: book author name (max 100 chars)
--- image: path/url to book cover image (max 100 chars)
--- summary: book description/summary (max 2000 chars)
--- year: publication year (max 100 chars)
--- pages: number of pages in the book
+-- Crea la tabella books per memorizzare le informazioni dei libri
+-- id: chiave primaria auto-incrementante
+-- title: titolo del libro (max 200 caratteri)
+-- author: nome dell'autore del libro (max 100 caratteri)
+-- image: percorso/url dell'immagine di copertina (max 100 caratteri)
+-- summary: descrizione/riassunto del libro (max 2000 caratteri)
+-- year: anno di pubblicazione (max 100 caratteri)
+-- pages: numero di pagine del libro
 CREATE TABLE books (
     id SERIAL,
     title VARCHAR(200),
@@ -30,11 +30,11 @@ CREATE TABLE books (
     CONSTRAINT books_pk PRIMARY KEY (id)
 );
 
--- Create junction table to track user-book relationships
--- user_id: foreign key referencing users table
--- book_id: foreign key referencing books table
--- read: boolean flag indicating if user has read the book
--- Composite primary key of user_id and book_id
+-- Crea la tabella di giunzione per tracciare le relazioni utente-libro
+-- user_id: chiave esterna che fa riferimento alla tabella users
+-- book_id: chiave esterna che fa riferimento alla tabella books
+-- read: flag booleano che indica se l'utente ha letto il libro
+-- Chiave primaria composta da user_id e book_id
 CREATE TABLE users_books (
     user_id integer,
 	book_id integer,
