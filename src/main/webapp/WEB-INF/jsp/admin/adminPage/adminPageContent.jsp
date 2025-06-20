@@ -1,97 +1,84 @@
 <!DOCTYPE html>
 <html lang="it">
 <head>
-  <!-- Imposta la codifica dei caratteri -->
   <meta charset="UTF-8">
 
-  <!-- Rende la pagina responsive su dispositivi mobili -->
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <!-- Titolo della pagina -->
   <title>Book Admin Panel</title>
 
-  <!-- Importa il CSS di Bootstrap da CDN -->
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-
-  <!-- Collegamento a un file CSS personalizzato (opzionale) 
   <link rel="stylesheet" href="styleAdminPage.css">
-  -->
-
 </head>
-<body class="bg-light"> <!-- Sfondo grigio chiaro con classe Bootstrap -->
 
-  <!-- Contenitore principale con padding verticale -->
-  <div class="container py-5">
+<body>
+  <div class="container">
+    <header class="text-center">
+      <h1>Pannello Admin</h1>
+    </header>
 
-    <!-- Titolo centrato con margine inferiore -->
-    <div class="text-center mb-4">
-      <h1 class="display-5">Pannello Admin</h1>
-    </div>
-
-    <!-- Card Bootstrap con ombra e margine inferiore -->
-    <div class="card shadow mb-5">
-
-      <!-- Intestazione della card con sfondo blu e testo bianco -->
-      <div class="card-header bg-primary text-white">
-        <h2 class="h5 mb-0">Aggiungi / Modifica Libri</h2>
-      </div>
-
-      <!-- Corpo della card che contiene il modulo -->
-      <div class="card-body">
+    <main class="main-content-wrapper">
+      <section class="form-section">
+        <h2>Aggiungi / Modifica Libri</h2>
         <form id="bookForm">
-          <!-- Campo nascosto per l'ID del libro (usato per modifiche) -->
-          <input type="hidden" id="bookId">
+          <input type="hidden" id="bookId" name="bookId" />
 
-          <!-- Campo per il titolo del libro -->
-          <div class="mb-3">
-            <label for="title" class="form-label">Titolo</label>
-            <input type="text" id="title" class="form-control" required>
+          <div class="form-group">
+            <label for="title">Titolo</label>
+            <input type="text" id="title" name="title" required aria-describedby="titleHelp" />
+            <small id="titleHelp" class="form-text text-muted">Inserisci il titolo del libro.</small>
           </div>
 
-          <!-- Campo per l'autore -->
-          <div class="mb-3">
-            <label for="author" class="form-label">Autore</label>
-            <input type="text" id="author" class="form-control" required>
+          <div class="form-group">
+            <label for="author">Autore</label>
+            <input type="text" id="author" name="author" required aria-describedby="authorHelp" />
+            <small id="authorHelp" class="form-text text-muted">Inserisci l'autore del libro.</small>
           </div>
 
-          <!-- Campo per la descrizione -->
-          <div class="mb-3">
-            <label for="description" class="form-label">Descrizione</label>
-            <textarea id="description" class="form-control" rows="4" required></textarea>
+          <div class="form-group">
+            <label for="description">Descrizione</label>
+            <textarea id="description" name="description" rows="4" required aria-describedby="descriptionHelp"></textarea>
+            <small id="descriptionHelp" class="form-text text-muted">Fornisci una breve descrizione del libro.</small>
           </div>
 
-          <!-- Campo per il numero di pagine -->
-          <div class="mb-3">
-            <label for="page" class="form-label">Pagine</label>
-            <input type="number" id="page" class="form-control" required>
+          <div class="form-group">
+            <label for="pages">Pagine</label>
+            <input
+              type="number"
+              id="pages"
+              name="pages"
+              min="1"
+              required
+              aria-describedby="pagesHelp"
+            />
+            <small id="pagesHelp" class="form-text text-muted">Inserisci il numero di pagine.</small>
           </div>
 
-          <!-- Campo per l'anno di pubblicazione -->
-          <div class="mb-3">
-            <label for="pubblication" class="form-label">Anno Pubblicazione</label>
-            <input type="number" id="pubblication" class="form-control" required>
+          <div class="form-group">
+            <label for="publicationYear">Anno Pubblicazione</label>
+            <input
+              type="number"
+              id="publicationYear"
+              name="publicationYear"
+              min="1000"
+              max="2025"
+              required
+              aria-describedby="publicationYearHelp"
+            />
+            <small id="publicationYearHelp" class="form-text text-muted">Inserisci l'anno di pubblicazione (es. 2023).</small>
           </div>
 
-          <!-- Bottone per salvare il libro -->
-          <button type="submit" class="btn btn-success">Salva</button>
+          <button type="submit">Salva Libro</button>
         </form>
-      </div>
-    </div>
+      </section>
 
-    <!-- Contenitore per la lista dei libri, organizzato in righe con spaziatura verticale -->
-    <div id="booksContainer" class="row gy-4">
-    <div id = "booksContainer" class="border p-3 rounded">
-     <div>
-
-        
-      <!-- I libri verranno inseriti qui dinamicamente tramite JavaScript -->
-    </div>
+      <section class="list-section">
+        <h2>Elenco Libri Esistenti</h2>
+        <div id="booksContainer">
+          </div>
+      </section>
+    </main>
   </div>
 
-  <!-- Importa il bundle JavaScript di Bootstrap (inclusi i plugin) -->
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-
-  <!-- Collegamento al file JS -->
   <script src="scriptAdminPage.js"></script>
 </body>
 </html>
