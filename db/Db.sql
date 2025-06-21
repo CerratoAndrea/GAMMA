@@ -1,8 +1,13 @@
--- Crea la tabella users per memorizzare le informazioni degli utenti
--- id: chiave primaria auto-incrementante
--- username: nome visualizzato dell'utente (max 200 caratteri)
--- password: password crittografata (max 100 caratteri)
--- email: indirizzo email dell'utente (max 200 caratteri)
+Drop table IF EXISTS challenge_book_user CASCADE;
+Drop table IF EXISTS challenge_book CASCADE;
+Drop table IF EXISTS user_challenge CASCADE;
+Drop table IF EXISTS challenges CASCADE;
+Drop table IF EXISTS users_books CASCADE;
+Drop table IF EXISTS books CASCADE;
+Drop table IF EXISTS users CASCADE;
+
+
+
 CREATE TABLE users (
     id SERIAL,
     username VARCHAR(200),
@@ -11,14 +16,7 @@ CREATE TABLE users (
     CONSTRAINT users_pk PRIMARY KEY (id)
 );
 
--- Crea la tabella books per memorizzare le informazioni dei libri
--- id: chiave primaria auto-incrementante
--- title: titolo del libro (max 200 caratteri)
--- author: nome dell'autore del libro (max 100 caratteri)
--- image: percorso/url dell'immagine di copertina (max 100 caratteri)
--- summary: descrizione/riassunto del libro (max 2000 caratteri)
--- year: anno di pubblicazione (max 100 caratteri)
--- pages: numero di pagine del libro
+
 CREATE TABLE books (
     id SERIAL,
     title VARCHAR(200),
@@ -30,16 +28,59 @@ CREATE TABLE books (
     CONSTRAINT books_pk PRIMARY KEY (id)
 );
 
--- Crea la tabella di giunzione per tracciare le relazioni utente-libro
--- user_id: chiave esterna che fa riferimento alla tabella users
--- book_id: chiave esterna che fa riferimento alla tabella books
--- read: flag booleano che indica se l'utente ha letto il libro
--- Chiave primaria composta da user_id e book_id
+
 CREATE TABLE users_books (
     user_id integer,
 	book_id integer,
 	read boolean,
     CONSTRAINT users_books_pk PRIMARY KEY (user_id, book_id),
-	CONSTRAINT users_books_fk1 FOREIGN KEY (user_id) REFERENCES users (id),
-	CONSTRAINT users_books_fk2 FOREIGN KEY  (book_id) REFERENCES books (id)
+	CONSTRAINT users_books_fk1 FOREIGN KEY (user_id) REFERENCES users (id) on DELETE CASCADE,
+	CONSTRAINT users_books_fk2 FOREIGN KEY  (book_id) REFERENCES books (id) on DELETE CASCADE
 );
+
+create table challenges (
+	id serial,   -- Chiave primaria, auto-incrementante
+	description text,      -- Descrizione della sfida
+	title varchar(100),   -- Titolo della sfida
+	start_date date default current_date,  -- Data inizio, predefinita a data corrente
+	end_date date,    
+	
+	constraint challenge_pk primary key (id)
+);
+
+create table user_challenge (
+	user_id int,        -- Chiave esterna per utenti
+	challenge_id int,     -- Chiave esterna per sfide
+	
+	constraint user_challenge_fk1 foreign key (user_id)
+		references users(id) on DELETE CASCADE,
+	constraint user_challenge_fk2 foreign key (challenge_id)
+		references challenges(id) on DELETE CASCADE,
+	CONSTRAINT user_challenge_pk PRIMARY key (user_id ,challenge_id)
+);
+
+
+create table challenge_book(
+	challenge_id int,     -- Chiave esterna per sfide
+	book_id int,         -- Chiave esterna per libri
+	
+	constraint challenge_fk foreign key (challenge_id)
+		references challenges(id) on DELETE CASCADE,
+	constraint book_fk foreign key (book_id)
+		references books(id) on DELETE CASCADE,
+	CONSTRAINT challenge_book_pk PRIMARY key (challenge_id, book_id)
+);
+
+create table challenge_book_user(
+	challenge_id int,    -- Chiave esterna per sfide
+	book_id int,        -- Chiave esterna per libri
+	user_id int,      -- Chiave esterna per utenti
+	
+	constraint challenge_book_user_fk1 foreign key (user_id, challenge_id)
+		references user_challenge(user_id, challenge_id) on DELETE CASCADE,
+	constraint challenge_book_user_fk2 foreign key (book_id, challenge_id)
+		references challenge_book(book_id, challenge_id) on DELETE CASCADE,
+	CONSTRAINT challenge_book_user_pk PRIMARY key (challenge_id, book_id, user_id)
+);
+
+

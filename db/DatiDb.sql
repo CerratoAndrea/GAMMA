@@ -1,6 +1,9 @@
 
 INSERT INTO users ( username, password, email) VALUES ( 'andrea.cerrato', 'gamma', 'andrea.cerrato@edu-its.it') ;
 INSERT INTO users ( username, password, email) VALUES ( 'andrea.lergo', 'gamma', 'andrea.lergo@edu-its.it') ;
+INSERT INTO users ( username, password, email) VALUES ( 'michelangelo.delfino', 'gamma', 'andrea.lergo@edu-its.it') ;
+INSERT INTO users ( username, password, email) VALUES ( 'giorgio.formiggini', 'gamma', 'andrea.lergo@edu-its.it') ;
+INSERT INTO users ( username, password, email) VALUES ( 'mattia.martinelli', 'gamma', 'andrea.lergo@edu-its.it') ;
 
 
 INSERT INTO books (title, author, image, summary, year, pages) VALUES ('Il Nome della Rosa', 'Umberto Eco', 'il_nome_della_rosa.jpg', 'Un’abbazia medievale isolata. Una comunità di monaci sconvolta da una serie di delitti. Un frate francescano che indaga i misteri di una biblioteca inaccessibile.In una edizione con i disegni e gli appunti preparatori dell’autore, il romanzo che ha rivelato il genio narrativo di Umberto Eco: tradotto in 60 paesi con oltre 50 milioni di copie vendute, Il nome della rosa ha vinto il premio Strega nel 1981 e ha ispirato un film e una serie tv di successo mondiale. “ I disegni e le annotazioni manoscritte del futuro autore del Nome della rosa testimoniano il minuzioso lavoro preparatorio prima della stesura del romanzo. A conferma di quanto affermato da Eco nelle ‘Postille’ (1983): ‘Per raccontare bisogna anzitutto costruirsi un mondo il più possibile ammobiliato sino agli ultimi particolari.’ E che cosa ci racconta o, meglio, ci anticipa di questo mondo il materiale visivo qui riprodotto? Innanzi tutto l’identità, la fisionomia dei principali protagonisti, con il tipico tratto veloce, arguto dell’autore, che ne giustificherà l’invenzione ‘per sapere quali parole mettere loro in bocca.’ Poi profili e piante di abbazie, castelli, labirinti, in una piena immersione nella cultura anche materiale del Medioevo.” Mario Andreose', '1980', '624');
@@ -19,6 +22,31 @@ INSERT INTO books (title, author, image, summary, year, pages) VALUES ('Il codic
 INSERT INTO users_books (user_id, book_id, read) VALUES (1, 1, true);
 INSERT INTO users_books (user_id, book_id, read) VALUES (1, 2, true);
 INSERT INTO users_books (user_id, book_id, read) VALUES (1, 3, false);
+
+
+INSERT INTO challenges(description, title, end_date) VALUES ( 'I migliori libri del 900', 'Classici del 900', '30-07-2025');
+INSERT INTO challenges(description, title, end_date) VALUES ( 'I migliori Horror della storia', 'Best Horror',  '31-08-2025');
+INSERT INTO challenges(description, title, end_date) VALUES ( 'I grandi capolavori Italiani', 'I Grandi Italiani', '31-12-2026');
+
+INSERT INTO challenge_book(challenge_id, book_id) VALUES (1, 1);
+INSERT INTO challenge_book(challenge_id, book_id) VALUES (1, 2);
+INSERT INTO challenge_book(challenge_id, book_id) VALUES (1, 3);
+INSERT INTO challenge_book(challenge_id, book_id) VALUES (2, 5);
+INSERT INTO challenge_book(challenge_id, book_id) VALUES (2, 6);
+INSERT INTO challenge_book(challenge_id, book_id) VALUES (2, 8);
+INSERT INTO challenge_book(challenge_id, book_id) VALUES (2, 7);
+
+INSERT INTO user_challenge(user_id, challenge_id) VALUES (1, 1);
+INSERT INTO user_challenge(user_id, challenge_id) VALUES (2, 1);
+INSERT INTO user_challenge(user_id, challenge_id) VALUES (3, 2);
+INSERT INTO user_challenge(user_id, challenge_id) VALUES (4, 2);
+INSERT INTO user_challenge(user_id, challenge_id) VALUES (5, 2);
+
+INSERT INTO challenge_book_user(challenge_id, book_id, user_id) VALUES (1, 1, 1);
+INSERT INTO challenge_book_user(challenge_id, book_id, user_id) VALUES (1, 3, 1);
+INSERT INTO challenge_book_user(challenge_id, book_id, user_id) VALUES (2, 5, 5);
+
+
 
 commit;
 
