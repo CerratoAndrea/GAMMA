@@ -5,10 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>BookHub - Profilo Utente</title>
     <link rel="stylesheet" href="style.css">
+    
 </head>
-<style>
 
-/* Stili Generali */
+<!--CSS-->>
+<style>
 body {
     font-family: Arial, sans-serif;
     margin: 0;
@@ -18,31 +19,9 @@ body {
     line-height: 1.6;
 }
 
-/* Header */
-header {
-    background-color: #2c3e50; /* Colore scuro dell'header */
-    color: white;
-    padding: 15px 20px;
-    display: flex;
-    align-items: center;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-}
 
-.logo {
-    display: flex;
-    align-items: center;
-}
 
-.logo img {
-    height: 50px;
-    margin-right: 20px;
-}
 
-.logo h1 {
-    font-size: 1.8em;
-    margin: 0;
-    color: white;
-}
 
 /* Contenitore Principale (simula il .container di Bootstrap) */
 .main-content-wrapper {
@@ -270,15 +249,9 @@ header {
 }
 
 </style>
-<body>
-   
-    <header>
-        <div class="logo">
-            <img src="/src/main/webapp/img/Logo.png" alt="BookHub Logo"> 
-            <h1>BookHub</h1>
-        </div>
-    </header>
 
+<body>   
+    <iframe src="/src/main/webapp/WEB-INF/jsp/navbar.jsp" width="100%" height="500px" frameborder="0"></iframe>
     <main class="container my-4">
         <div class="user-profile-layout mx-auto row"> <div class="col-md-4 mb-4"> <section class="user-info-card h-100 p-4"> <h2 class="mb-3">Profilo Utente</h2>
                     <p class="text-start">Nome: <span id="userName">Nome Utente</span></p> <p class="text-start"></p>
