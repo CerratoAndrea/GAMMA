@@ -5,9 +5,12 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
+
 import com.its.bookhub.BookHubApplication;
 import com.its.bookhub.mapper.UserMapper;
+import com.its.bookhub.mapper.UserRankMapper;
 import com.its.bookhub.model.User;
+import com.its.bookhub.model.UserRank;
 
 @Repository
 public class UserRepository {
@@ -74,5 +77,13 @@ public class UserRepository {
 				System.out.println(e.getMessage());
 				return null;
 			}
+	 }
+	 public List<UserRank> findByChallenge(Long ch_id) {
+		 	String query = "SELECT * FROM USERS JOIN USER_CHALLENGE ON id = user_id "
+		 				 + "WHERE challenge_id = ? ";		 	
+		 	List<UserRank> users = jdbcTemplate.query(query,
+	                                              new UserRankMapper(),
+	                                              new Object[]{ch_id});
+		 	return users;
 	 }
 }

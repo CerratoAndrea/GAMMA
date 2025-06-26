@@ -21,6 +21,7 @@ public class BookMapper implements RowMapper<Book>{
 		book.setPages(rs.getInt("PAGES"));
 		book.setYear(rs.getString("YEAR"));
 		book.setSummary(rs.getString("SUMMARY"));
+		book.setType(rs.getString("TYPE"));
 		
 		
 		return book;

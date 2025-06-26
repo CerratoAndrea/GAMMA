@@ -20,6 +20,9 @@ public class LoginController {
     
     @Autowired
     HomepageController homepageController;
+    
+    @Autowired
+    BookController bookController;
 
     @GetMapping("/")
     public String showLoginPage(ModelMap model){
@@ -27,7 +30,10 @@ public class LoginController {
     }
 
     @PostMapping("/login")
-    public String login(ModelMap model, HttpSession session, @RequestParam String name, @RequestParam String password){
+    public String login(ModelMap model, 
+    		            HttpSession session, 
+    		            @RequestParam String name, 
+    		            @RequestParam String password){
     	System.out.println("login");
         User user = service.validateUser(name, password);        
         
@@ -36,10 +42,12 @@ public class LoginController {
             return "loginPage";
         }
 
-        session.setAttribute("user", user);
-        session.setAttribute("username", user.getName());
-        
-        return homepageController.homepage(model, session, null, null);
+        session.setAttribute("user", user);        
+
+        if(user.getType().equals("admin"))
+        	return bookController.manageBook(model, session);
+        else
+        	return homepageController.homepage(model, session, null, null);
     }
     
     @PostMapping("/logout")

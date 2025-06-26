@@ -22,6 +22,10 @@ public class BookService {
 	 	return bookRepository.findAll(id_utente);
 	}
 	
+	public List<Book> findAllDeletable(){
+		return bookRepository.findAllDeletable();
+	}
+	
 	public List<Book> findByTitle(String title, long id_utente) {	 	
 	 	return bookRepository.findByTitle(title, id_utente);
 	} 

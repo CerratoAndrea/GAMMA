@@ -13,7 +13,9 @@ CREATE TABLE users (
     username VARCHAR(200),
     password VARCHAR(100),
 	email VARCHAR(200),
+	type VARCHAR(50) default 'default',
     CONSTRAINT users_pk PRIMARY KEY (id)
+	
 );
 
 
@@ -25,6 +27,7 @@ CREATE TABLE books (
 	summary VARCHAR(2000),
 	year VARCHAR(100),
 	pages integer,
+	type VARCHAR(50),
     CONSTRAINT books_pk PRIMARY KEY (id)
 );
 

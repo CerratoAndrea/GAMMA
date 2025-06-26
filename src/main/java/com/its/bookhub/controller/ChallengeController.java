@@ -1,6 +1,7 @@
 package com.its.bookhub.controller;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,17 +12,66 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.its.bookhub.model.Book;
-import com.its.bookhub.service.LoginService;
+import com.its.bookhub.model.Challenge;
+import com.its.bookhub.model.User;
+import com.its.bookhub.model.UserRank;
+import com.its.bookhub.service.ChallengeService;
 
 import jakarta.servlet.http.HttpSession;
 
 @Controller
 public class ChallengeController {
 
+	@Autowired
+	ChallengeService challengeService;
+	
+	@PostMapping("/joinChallenge")
+    public String joinChallenge(ModelMap model, HttpSession session, 
+    		                    @RequestParam(required = false) Long ch_id){
+		User user = (User)session.getAttribute("user");
+		challengeService.joinChallenge(user.getId(), ch_id);
+		return visChallenge(model,ch_id);
+	}
+	
+	@PostMapping("/leaveChallenge")
+    public String leaveChallenge(ModelMap model, HttpSession session, 
+    		                    @RequestParam(required = false) Long ch_id){
+		User user = (User)session.getAttribute("user");
+		challengeService.leaveChallenge(user.getId(), ch_id);
+		return challenge(model, session, null);
+	}
+	
 	@GetMapping("/challenge")
-    public String challenge(ModelMap model){
+    public String challenge(ModelMap model, HttpSession session, 
+    		                @RequestParam(required = false) Long ch_id){
+		
+		System.out.println("ch_id "+ch_id);
+		User user = (User)session.getAttribute("user");
+		UserRank userRank = new UserRank();
+		userRank.setUsername(user.getName());
+		
+		List<Challenge> challenges = challengeService.getChallenges(user.getId());
+		for(Challenge challenge :challenges) {
+			System.out.println("ch_id "+challenge.getId());
+			System.out.println("bool "+challenge.getChPartecipation());
+		}
+		
+		model.put("Challenges", challenges);
+		
+		if(ch_id == null) {
+			List<UserRank> users = returnRankingByChallenge(challenges.get(0).getId());
+			model.put("Users", users);
+			model.put("ChallengeName", challenges.get(0).getTitle());
+		}
+		else {
+			List<UserRank> users = returnRankingByChallenge(ch_id);
+			model.put("Users", users);
+			model.put("ChallengeName", challengeService.findById(ch_id).getTitle());
+		}
+		
 		return "listaChallenge";
 	}
+	
 	
     @GetMapping("/createChallenge")
     public String createChallenge(ModelMap model){
@@ -135,7 +185,8 @@ public class ChallengeController {
     }
     
     @GetMapping("/visChallenge")
-    public String visChallenge(ModelMap model){
+    public String visChallenge(ModelMap model,
+    		                   @RequestParam(required = true) Long ch_id){
     	
     	 Book b1 = new Book();
          b1.setAuthor("George Orwell");
@@ -206,6 +257,20 @@ public class ChallengeController {
          model.put("libBooks", books);
          
         return "visChallenge";
+    }
+    
+    private List<UserRank> returnRankingByChallenge(Long ch_id){
+    	
+    	List<UserRank> users = challengeService.findByChallenge(ch_id);
+    	for (UserRank user : users) {
+			int points = challengeService.getUserPoints(user.getId(), ch_id);
+			
+			user.setPoints(points);
+			user.setBooksRead(challengeService.getReadBooks(user.getId(), ch_id));
+		}
+    	users.sort(Comparator.comparing(UserRank::getPoints).reversed());
+		
+    	return users;
     }
 
 }

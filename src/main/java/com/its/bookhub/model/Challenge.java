@@ -10,22 +10,22 @@ public class Challenge {
 	private String description;
 	private Date startDate;
 	private Date endDate;
-
-
+	private boolean chPartecipation;
+	private int numUsers;
 	
 	
-	//Getters e setter della Challenge
-	public long getId_challenge() {
+	
+	public long getId() {
 		return id;
 	}
-	public void setId_challenge(long id) {
+	public void setId(long id) {
 		this.id = id;
 	}
-	public String getName() {
+	public String getTitle() {
 		return title;
 	}
-	public void setName(String name) {
-		this.title = name;
+	public void setTitle(String title) {
+		this.title = title;
 	}
 	public String getDescription() {
 		return description;
@@ -33,18 +33,32 @@ public class Challenge {
 	public void setDescription(String description) {
 		this.description = description;
 	}
-	public Date getStart_date() {
+	public Date getStartDate() {
 		return startDate;
 	}
-	public void setStart_date(Date start_date) {
-		this.startDate = start_date;
+	public void setStartDate(Date startDate) {
+		this.startDate = startDate;
 	}
-	public Date getEnd_date() {
+	public Date getEndDate() {
 		return endDate;
 	}
-	public void setEnd_date(Date end_date) {
-		this.endDate = end_date;
+	public void setEndDate(Date endDate) {
+		this.endDate = endDate;
 	}
+	public boolean getChPartecipation() {
+		return chPartecipation;
+	}
+	public void setChPartecipation(boolean chPartecipation) {
+		this.chPartecipation = chPartecipation;
+	}
+	public int getNumUsers() {
+		return numUsers;
+	}
+	public void setNumUsers(int numUsers) {
+		this.numUsers = numUsers;
+	}
+
+
 	
 
 }

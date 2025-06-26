@@ -6,7 +6,15 @@ public class User {
 	private String name;
 	private String password;
 	private String email;
+	private String type;
 	
+	
+	public String getType() {
+		return type;
+	}
+	public void setType(String type) {
+		this.type = type;
+	}
 	public String getName() {
 		return name;
 	}

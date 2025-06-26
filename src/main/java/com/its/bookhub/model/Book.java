@@ -10,6 +10,8 @@ public class Book {
 	private String year;
 	private int pages;
 	private Boolean read;
+	private boolean deletable;
+	private String type;
 	
 	public String getTitle() {
 		return title;
@@ -59,5 +61,20 @@ public class Book {
 	public void setRead(Boolean read) {
 		this.read = read;
 	}
+	public boolean getDeletable() {
+		return deletable;
+	}
+	public void setDeletable(boolean deletable) {
+		this.deletable = deletable;
+	}
+	public String getType() {
+		return type;
+	}
+	public void setType(String type) {
+		this.type = type;
+	}
+	
+	
+	
 
 }

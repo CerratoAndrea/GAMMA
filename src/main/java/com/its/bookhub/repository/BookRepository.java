@@ -6,10 +6,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
+import com.its.bookhub.mapper.BookDelatableMapper;
 import com.its.bookhub.mapper.BookMapper;
 import com.its.bookhub.mapper.UserBookMapper;
 import com.its.bookhub.model.Book;
-import com.its.bookhub.model.Genre;
 
 @Repository
 public class BookRepository {
@@ -30,6 +30,14 @@ public class BookRepository {
 	 	List<Book> books = jdbcTemplate.query(query,
                                               new UserBookMapper(),
                                               new Object[]{id_utente});
+	 	return books;
+	}
+	
+	public List<Book> findAllDeletable() {
+	 	String query = "select * from books left join challenge_book on id = book_id;";		 	
+	 	List<Book> books = jdbcTemplate.query(query,
+                                              new BookDelatableMapper(),
+                                              new Object[] {});
 	 	return books;
 	}
 	
@@ -111,5 +119,13 @@ public class BookRepository {
 	                                  read, bookId );
 	 }
 	
-	
+	public List<Book> getChallengeUserBooks(long id_utente, long ch_id) {
+		
+		String query = "SELECT * FROM BOOKS Inner JOIN challenge_book_user ON id = book_id "
+				 				 + "WHERE challenge_id = ? and user_id = ?";
+	 	List<Book> books =  jdbcTemplate.query(query,
+	 										   new BookMapper(),
+	 										   new Object[]{ch_id, id_utente});
+	 	return books;
+} 
 }

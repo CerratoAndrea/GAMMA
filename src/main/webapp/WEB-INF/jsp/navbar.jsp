@@ -1,6 +1,10 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 
+<%@ page import="com.its.bookhub.model.User" %>
+
+<%@ page contentType="text/html; charset=UTF-8" %>
+
 <html>
 
 <head>
@@ -14,6 +18,14 @@
   
 </head>
 
+<% User user = (User)session.getAttribute("user"); 
+   String userName = user.getName();
+   
+   Boolean adminUser = false;
+   if(user.getType().equals("admin"))
+	   adminUser = true;
+%>
+
 <body>
 	    <div class="container-fluid pb-3 rounded">
 	    	<nav class="navbar navbar-expand-sm navbar-light bg-light border shadow-sm">
@@ -21,20 +33,27 @@
 			    <img   src="img/Logo.png" alt="BookHub" width="60px" height="60px" border=1>			    
 			    <div class="collapse navbar-collapse" id="mynavbar">
 			      <ul class="navbar-nav me-auto p-1">			      
-			        <li class="nav-item p-1 ms-4">
-			          <a class="nav-link" href="homepage"><strong>Libreria</strong></a>
-			        </li>
-			        <li class="nav-item dropdown p-1 ms-4">
-			          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false"><strong>Challenge</strong></a>
-			          <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-			            <li><a class="dropdown-item" href="challenge"><strong>Classifiche</strong></a></li>
-			            <li><a class="dropdown-item" href="createChallenge"><strong>Crea una challenge</strong></a></li>
-			          </ul>			          
-			        </li>
+				    <% if(adminUser){ %>						    
+					      <li class="nav-item p-1 ms-4">
+					        <a class="nav-link" href="manageBook"><strong>Gestione libri</strong></a>
+					      </li>
+				    <% }
+				       else { 	%>					    
+						<li class="nav-item p-1 ms-4">
+		          			<a class="nav-link" href="homepage"><strong>Libreria</strong></a>
+		        		</li>
+		        		<li class="nav-item dropdown p-1 ms-4">
+		          			<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false"><strong>Challenge</strong></a>
+	          				<ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+								<li><a class="dropdown-item" href="challenge"><strong>Classifiche</strong></a></li>
+	            				<li><a class="dropdown-item" href="createChallenge"><strong>Crea una challenge</strong></a></li>
+	            			</ul>			          
+		        		</li>
+		        	<% } %>
 			      </ul>
 		      	  <ul class="navbar-nav ml-auto p-1">
 			        <li class="nav-item p-1">
-			          <a class="nav-link" href="user-profile"><strong><%= session.getAttribute("username") %></strong></a>
+			          <a class="nav-link" href="user-profile"><strong><%= userName %></strong></a>
 			        </li>
 			        <li class="nav-item p-1 ms-4 me-2">
 			           <a class="nav-link" href="javascript:logout()"><strong>Logout</strong></a>
