@@ -58,5 +58,13 @@ public class BookService {
 	     return bookRepository.updateBookReading(bookId, read);
 	 }
 	
-
+	public void deleteBook(Long bookId) {
+		
+		bookRepository.deleteBookById(bookId);
+	}
+	public void addBook(String title, String author, String image,String type,String summary, String year,Integer pages) {
+		
+		bookRepository.addBook(title, author, image, type, summary, year, pages);
+		
+	}
 }

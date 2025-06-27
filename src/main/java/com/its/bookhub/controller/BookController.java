@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
-
+import com.its.bookhub.BookHubApplication;
 import com.its.bookhub.model.Book;
 import com.its.bookhub.model.User;
 import com.its.bookhub.service.BookService;
@@ -20,9 +20,15 @@ import jakarta.servlet.http.HttpSession;
 
 @Controller
 public class BookController {
+
+    private final BookHubApplication bookHubApplication;
     
 	@Autowired
 	BookService bookService;
+
+    BookController(BookHubApplication bookHubApplication) {
+        this.bookHubApplication = bookHubApplication;
+    }
 	
     @GetMapping("/manageBook")
     public String manageBook(ModelMap model,
@@ -44,6 +50,7 @@ public class BookController {
     		              HttpSession session,
     		              @RequestParam String title, 
     		              @RequestParam String author, 
+    		              @RequestParam String year, 
     		              @RequestParam Integer pages, 
     		              @RequestParam String image, 
     		              @RequestParam String type, 
@@ -56,15 +63,19 @@ public class BookController {
     	System.out.println("book type "+type);
     	System.out.println("book summary "+summary);
     	
+    	bookService.addBook(title, author, image, type, summary, year, pages);
+    	
     	return manageBook(model, session);
     }
     
     @PostMapping("/deleteBook")
     public String deleteBook(ModelMap model,
     		                 HttpSession session,
-    		                 @RequestParam Integer id){
+    		                 @RequestParam int id){
     	
-    	System.out.println("book id "+id);
+    	System.out.println(id);
+    	Long bookIdLong = Long.valueOf(id);
+    	bookService.deleteBook(bookIdLong);
     	
     	return manageBook(model, session);
     }

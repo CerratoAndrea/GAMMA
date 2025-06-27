@@ -1,127 +1,127 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
-<style>
-:root {
-    --primary-color: #3498db;
-    --secondary-color: #2c3e50;
-    --accent-color: #e74c3c;
-    --light-gray: #f8f9fa;
-    --border-color: #dee2e6;
-    --text-primary: #333;
-    --text-secondary: #666;
-    --shadow: 0 2px 10px rgba(0,0,0,0.1);
-}
-/* Layout */
-.container-fluid {
-    max-width: 1400px;
-    margin: 0 auto;
-    padding: 2rem;
-}
-/* Cards */
-.card {
-    background: white;
-    border-radius: 12px;
-    box-shadow: var(--shadow);
-    transition: all 0.3s ease;
-}
-.card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
-}
-.card-header {
-    background: var(--light-gray);
-    border-radius: 12px 12px 0 0;
-    padding: 1.5rem;
-}
-.card-header h4 {
-    margin: 0;
-    color: var(--secondary-color);
-    font-weight: 600;
-}
-.card-body {
-    padding: 1.5rem;
-}
-/* Book Grid */
-.image-wrapper {
-    position: relative;
-    overflow: hidden;
-    border-radius: 8px;
-    aspect-ratio: 3/4;
-}
-.image-wrapper img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    transition: transform 0.3s ease;
-}
-.image-wrapper:hover img {
-    transform: scale(1.05);
-}
-/* Form Elements */
-.form-control {
-    border: 2px solid var(--border-color);
-    border-radius: 8px;
-    padding: 0.75rem;
-    transition: all 0.3s ease;
-}
-.form-control:focus {
-    border-color: var(--primary-color);
-    box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.2);
-}
-textarea.form-control {
-    min-height: 150px;
-    resize: vertical;
-}
-/* Buttons */
-.btn {
-    border-radius: 8px;
-    padding: 0.75rem 1.5rem;
-    font-weight: 600;
-    transition: all 0.3s ease;
-}
-.btn-primary {
-    background: var(--primary-color);
-    border: none;
-}
-.btn-primary:hover {
-    background: #2980b9;
-    transform: translateY(-2px);
-}
-.btn-secondary {
-    background: var(--secondary-color);
-    border: none;
-}
-/* Modal */
-.modal-content {
-    border-radius: 12px;
-    overflow: hidden;
-}
-.modal-header {
-    background: var(--light-gray);
-    border: none;
-    padding: 1.5rem;
-}
-.modal-body {
-    padding: 2rem;
-}
-.modal-footer {
-    border: none;
-    padding: 1.5rem;
-}
-/* Book Details */
-#dettTitle {
-    font-size: 1.5rem;
-    color: var(--text-primary);
-    font-weight: 600;
-}
-#dettAuthor, #dettYear, #dettPages {
-    color: var(--text-secondary);
-    margin: 0.5rem 0;
-}
-#dettSummary {
-    line-height: 1.6;
-    color: var(--text-secondary);
-}
+	    
+	    <div class="container-fluid pb-1">
+	    
+		
+		<div class="modal fade" id="dettaglioLibro" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+		  <div class="modal-dialog modal-dialog-centered" role="document">
+		    <div class="modal-content">
+		      <div class="modal-header">
+		        <h5 class="modal-title" id="dettTitle"></h5>
+		      </div>
+		      <div class="modal-body">
+		        <div class="container-fluid">
+				    <div class="row">
+				      <div class="col-6"><img id="dettImg" src="" width="100%" height="100%" border="1"  ></div>
+				      <div class="coL-6">
+					      <div class="row pb-4">
+					      	<div id="dettAuthor"></div>
+					      </div>
+					      <div class="row pb-4">
+					      	<div id="dettYear"></div>
+					      </div>
+					      <div class="row">
+					      	<div id="dettPages"></div>
+					      </div>
+					      
+					      <form id="dettaglioForm" action="" method="post">
+					      	<input type="hidden" id="dettId" name="bookId" value=""/>
+					      </form>
+				      </div>
+				    </div>
+				    <div class="row">
+				      <p class="pt-3" id="dettSummary" ></p>
+				    </div>
+				</div>
+		      </div>
+		      <div class="modal-footer">
+		        <button id ="dettaglioCloseButton" type="button" class="btn btn-secondary" data-dismiss="modal">Chiudi</button>		        
+		      </div>
+		    </div>
+		  </div>
+		</div>
+		    					
+		<form id ="challengeForm" action="createChallenge" method="post">
+	      <div class="row">
+	      <div class="col-3 container-fluid">
+			 	<div class="card shadow" style="height: 100%;">
+				  <div class="card-header"><h4>Nuova Challenge</h4></div>
+				  	<div class="card-body">
+				  		<div class="container p-0">	  						
+	    					<div class="row">
+	    						<div class="p-2">
+							      <label for="name"><b>Nome</b></label>
+							      <input type="text" class="form-control" id="name" name="name">
+							    </div>
+	  						</div>
+	  						<div class="row">
+	    						<div class="p-2">
+							      <label for="endDate"><b>Termina il</b></label>
+								  <input id="endtDate" class="form-control" type="date" />
+							    </div>
+	  						</div>
+	  						<div class="row">
+	    						<div class="p-2">
+							      <label for="desc" class="form-label"><b>Descrizione</b></label>
+  								  <textarea class="form-control" id="desc" rows="15" name="desc"></textarea>
+							    </div>
+	  						</div>
+	  						<div class="p-2">
+						    	<font color="red" id="errorMsg">${errorMessage}</font>
+						    </div>
+	  						<div class="row">
+	  							<div class="p-2">
+	    							<button class="btn btn-primary" id="createChallengeButton" style="width:100%" >Crea la Challenge</button>
+	    						</div>
+	  						</div>
+	    				</div>
+				  	</div>
+				</div>
+		    </div>
+	        <div class="col-9 container-fluid">
+			    <div class="card shadow" style="height: 100%;">
+				  <div class="card-header"><h4>Libri disponibili</h4></div>
+				  <div class="card-body">					  
+	  					<div class="row">
+	    					<c:forEach var="book" items="${libBooks}">
+		    					<div class="col m-0"  >
+		      						<div class="card mx-auto mb-4" style="width:200px;">
+				  						<div class="card-body image-wrapper">
+											<img src="img/${book.image}" alt="${book.title}" width="100%" height="100%" border="1"  >
+										</div>
+				  						<div class="card-body pt-0">
+				    						<a href="javascript:apriDettaglioLibro(${book.id})" ><h6 class="card-title">${book.title}</h6></a>
+				    						<p class="card-text">${book.author}</p>
+				  						</div>
+				  						<div class="form-check mx-auto">
+										  <input class="form-check-input" type="checkbox" value="${book.id}" name = "book" >
+										</div>
+									</div>
+									<input type="hidden" id="bookId${book.id}" value="${book.id}"/>
+									<input type="hidden" id="bookTitle${book.id}" value="${book.title}"/>
+									<input type="hidden" id="bookAuthor${book.id}" value="${book.author}"/>
+									<input type="hidden" id="bookYear${book.id}" value="${book.year}"/>
+									<input type="hidden" id="bookSummary${book.id}" value="${book.summary}"/>
+									<input type="hidden" id="bookPages${book.id}" value="${book.pages}"/>
+									<input type="hidden" id="bookImg${book.id}" value="${book.image}"/>
+									<input type="hidden" id="bookRead${book.id}" value="${book.read}"/>
+		    					</div>	 
+		    				</c:forEach>
+	  					</div>
+					</div>
+				</div>  
+			  </div>			
+		  </div>
+		</form>
+	  </div>
+	</div>
+	
+	<script type="text/javascript">
+	
+		function apriDettaglioLibro(bookId){
+					
+			$('#dettId').val($('#bookId'+bookId).val());
 			$('#dettTitle').html($('#bookTitle'+bookId).val());
 			$('#dettAuthor').html('<strong>Autore:</strong> '+$('#bookAuthor'+bookId).val());
 			$('#dettYear').html('<strong>Anno:</strong> '+$('#bookYear'+bookId).val());			

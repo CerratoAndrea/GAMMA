@@ -23,7 +23,7 @@ CREATE TABLE books (
     id SERIAL,
     title VARCHAR(200),
     author VARCHAR(100),
-	image VARCHAR(100),
+	image VARCHAR(200),
 	summary VARCHAR(2000),
 	year VARCHAR(100),
 	pages integer,

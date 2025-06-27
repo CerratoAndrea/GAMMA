@@ -127,5 +127,19 @@ public class BookRepository {
 	 										   new BookMapper(),
 	 										   new Object[]{ch_id, id_utente});
 	 	return books;
-} 
+	} 
+	
+	public int deleteBookById(Long bookId) {
+		 String query = "DELETE FROM BOOKS WHERE ID = ?";
+	     return jdbcTemplate.update(query,
+	                                  bookId );
+	 }
+	
+	public int addBook(String title, String author, String image,String type,String summary, String year,Integer pages) {
+		 String query = "INSERT INTO books (title, author, image, type, summary, year, pages) VALUES (?,?,?,?,?,?,?)";
+	     return jdbcTemplate.update(query,
+	    		 					title, author, image, type, summary, year, pages);
+	 }
+	
+	
 }

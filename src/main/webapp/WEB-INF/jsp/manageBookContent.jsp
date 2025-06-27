@@ -65,6 +65,12 @@
 							    </div>
 	  						</div>
 	  						<div class="row">
+	  						<div class="p-2">
+							      <label for="year"><b>Anno di Publicazione</b></label>
+								  <input id="year" class="form-control" type="text" name="year" />
+							    </div>
+	  						</div>
+	  						<div class="row">
 	    						<div class="p-2">
 							      <label for="pages"><b>Pagine</b></label>
 								  <input id="pages" class="form-control" type="number" name="pages" />
@@ -187,6 +193,7 @@
 		
 			var title = $('#title').val();
 			var author = $('#author').val();
+			var year = $('#year').val();
 			var pages = $('#pages').val();
 			var image = $('#image').val();
 			var type = $('#type').val();
@@ -227,6 +234,7 @@
 		});
 		
 		function elimina(idBook){	
+			
 			$('#bookForm').attr("action",'deleteBook');
 			$('#bookId').val(idBook);
 			$('#bookForm').submit();

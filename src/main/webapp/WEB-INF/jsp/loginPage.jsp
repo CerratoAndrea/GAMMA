@@ -34,7 +34,7 @@
 		    	<button class="btn btn-primary" id="loginButton" style="width:100%">Login</button>
 		    </div>
 		    <div class="p-2">
-		    	<p><small>Non hai un account?&nbsp;&nbsp;</small><a href="register"><small>Registrati</small></a></p> 
+		    	<p><small>Non hai un account?&nbsp;&nbsp;</small><a href="registerUser"><small>Registrati</small></a></p> 
 		    </div>
 		  </form>
 	  </div>
