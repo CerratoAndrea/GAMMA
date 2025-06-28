@@ -32,16 +32,16 @@ public class UserRepository {
 	 }
 	 
 	 public int save(User user) {
-		 	String query = "INSERT INTO USERS(name, password) values(?,?)";
+		 	String query = "INSERT INTO users ( username, password, email) values(?,?,?)";
 	        return jdbcTemplate.update(query,
-	                				   user.getName(), user.getPassword());
+	                				   user.getName(), user.getPassword(), user.getEmail());
 	 }
 
 	    
 	 public int update(User user) {
-		 String query = "UPDATE USERS SET PASSWORD = ? WHERE ID = ?";
+		 String query = "UPDATE USERS SET PASSWORD = ?, USERNAME = ?, EMAIL = ? WHERE ID = ?";
 	        return jdbcTemplate.update(query,
-	                                   user.getPassword(), "");
+	                                   user.getPassword(), user.getName(), user.getEmail(), user.getId());
 	 }
  
 	 public List<User> findAll() {

@@ -50,17 +50,67 @@ public class LoginController {
         	return homepageController.homepage(model, session, null, null);
     }
     
-    @PostMapping("/logout")
+    @GetMapping("/logout")
+
     public String logout(HttpSession session){
     	System.out.println("logout");
-        
     	session.invalidate();
-    	
+
         return "loginPage";
     }
+
+    
+
     @GetMapping("/register")
-    public String showRegisterPage(ModelMap model){
+    public String register(ModelMap model){
+    	
         return "registerPage";
+    }
+    
+    @PostMapping("/registerUser")
+    public String register(ModelMap model, 
+    		 			   @RequestParam String name, 
+    		 			   @RequestParam String email, 
+    		 			   @RequestParam(name = "create-password") String password){
+    	
+    	User user = new User();
+    	user.setName(name);
+    	user.setEmail(email);
+    	user.setPassword(password);
+    	
+    	service.saveUser(user);
+        return "loginPage";
+    }
+    
+    @PostMapping("/saveProfile")
+    public String saveProfile(ModelMap model, 
+    						HttpSession session, 
+    		 			   @RequestParam String name,
+    		 			   @RequestParam Long id,
+    		 			   @RequestParam String email, 
+    		 			   @RequestParam(name = "create-password") String password,
+    		 			   @RequestParam String type){
+    	
+    	User user = new User();
+    	user.setName(name);
+    	user.setEmail(email);
+    	user.setPassword(password);
+    	user.setId(id);
+    	user.setType(type);
+    	
+    	service.updateUser(user);
+    	
+    	session.setAttribute("user", user);  
+    	if(user.getType().equals("admin"))
+        	return bookController.manageBook(model, session);
+        else
+        	return homepageController.homepage(model, session, null, null);
+    }
+    
+    @GetMapping("/user-profile")
+    public String userProfile(ModelMap model){
+    	
+        return "user-profile";
     }
     
 }

@@ -1,3 +1,5 @@
+<%@ page contentType="text/html; charset=UTF-8" %>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -29,14 +31,14 @@
         </div>
         <div class="p-2">
           <label for="create-password"><b>Password</b></label>
-          <input type="create-password" class="form-control" id="create-password" name="create-password">
+          <input type="password" class="form-control" id="create-password" name="create-password">
         </div>
         <div class="p-2">
           <label for="control-password"><b>Ripeti password</b></label>
-          <input type="control-password" class="form-control" id="control-password" name="control-password">
+          <input type="password" class="form-control" id="control-password" name="control-password">
         </div>
         <div class="p-2">
-          <span color="red" id="errorMsg">${errorMessage}</span>
+          <font color="red" id="errorMsg">${errorMessage}</font>
         </div>
         <div class="p-2">
           <button class="btn btn-primary" id="registerButton" style="width:100%">Registrati</button>
@@ -49,27 +51,42 @@
 		$('#registerButton').on('click', function (e) {	
 		    e.preventDefault();
 		    
-		    
 		    $('#errorMsg').html("")
-			//Fare controlli e fare registrazione su back-end e db
+		
 			var name = $('#name').val();
-			var password = $('#password').val();
+		    var email = $('#email').val();
+			var createPassword = $('#create-password').val();
+			var controlPassword = $('#control-password').val();
 			
 			if(!name){		
 				$('#errorMsg').html("Inserire lo username");
 				return false;
 			}
+			
+			if(!email){
+				$('#errorMsg').html("Inserire l'email")
+				return false;
+			}
 				
-			if(!password){
+			if(!createPassword){
 				$('#errorMsg').html("Inserire la password")
 				return false;
 			}
 			
-			$('#loginForm').submit();
+			if(!controlPassword){
+				$('#errorMsg').html("Ripetere la password")
+				return false;
+			}
+			
+			if(createPassword != controlPassword){
+				$('#errorMsg').html("Le password non coincidono")
+				return false;
+			}
+			
+			$('#registerForm').submit();
 			return true;
 		});
     </script>
-  
 
 </body>
 

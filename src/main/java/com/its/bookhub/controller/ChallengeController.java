@@ -38,12 +38,20 @@ public class ChallengeController {
     		                    @RequestParam(required = false) Long ch_id){
 		User user = (User)session.getAttribute("user");
 		challengeService.leaveChallenge(user.getId(), ch_id);
-		return challenge(model, session, null);
+		return challenge(model, session, null, null);
 	}
 	
 	@GetMapping("/challenge")
-    public String challenge(ModelMap model, HttpSession session, 
-    		                @RequestParam(required = false) Long ch_id){
+    public String challenge(ModelMap model,
+    						HttpSession session, 
+    		                @RequestParam(required = false) Long ch_id,
+    		                @RequestParam (required = false) String type){
+		
+		
+		System.out.println("ch type "+type);
+		if(type == null || type.trim().equals(""))
+			type = "tutte";
+		model.put("filtro", type);
 		
 		System.out.println("ch_id "+ch_id);
 		User user = (User)session.getAttribute("user");
@@ -71,6 +79,12 @@ public class ChallengeController {
 		
 		return "listaChallenge";
 	}
+	
+	
+	
+	
+	
+	
 	
 	
     @GetMapping("/createChallenge")
@@ -271,6 +285,34 @@ public class ChallengeController {
     	users.sort(Comparator.comparing(UserRank::getPoints).reversed());
 		
     	return users;
+    }
+    
+    @PostMapping("/saveChallenge")
+
+    public String saveChallenge(ModelMap model,
+    							HttpSession session,
+    							@RequestParam String name, 
+    							@RequestParam String endDate, 
+    							@RequestParam String desc, 
+    							@RequestParam List<String> book ){
+    	System.out.println("name "+name);
+    	System.out.println("endDate "+endDate);
+    	System.out.println("desc "+desc);
+    	for(String b : book)
+    		System.out.println("book id "+b);
+  	return challenge(model, session, null, null);
+    }
+
+    @PostMapping("/updateChallenge")
+    public String updateChallenge(ModelMap model,
+    							  HttpSession session,
+    							  @RequestParam Long id,
+    							  @RequestParam List<String> book ){
+    	System.out.println("challenge id "+id);
+    	for(String b : book)
+    		System.out.println("book id "+b);
+    	return challenge(model, session, null, null);
+
     }
 
 }

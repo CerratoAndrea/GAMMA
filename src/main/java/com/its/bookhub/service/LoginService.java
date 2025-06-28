@@ -20,5 +20,14 @@ public class LoginService {
         return user;
         		
     }
-
+    
+    public int saveUser(User user) {
+    	
+    	return userRepository.save(user);
+    }
+    
+    public int updateUser(User user) {
+    	return userRepository.update(user);
+    }
+    
 }

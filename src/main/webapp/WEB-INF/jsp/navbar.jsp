@@ -19,11 +19,26 @@
 </head>
 
 <% User user = (User)session.getAttribute("user"); 
-   String userName = user.getName();
-   
+
+   String userName = null;
    Boolean adminUser = false;
-   if(user.getType().equals("admin"))
-	   adminUser = true;
+   String userEmail = null;
+   String userPassword = null;
+   Long userId = null;
+   String userType = null;
+
+   if(user == null)
+	   response.sendRedirect("logout");
+   else{	   
+	   userName = user.getName();
+	   userEmail = user.getEmail();
+	   userPassword = user.getPassword();
+	   userId = user.getId();
+	   userType = user.getType();
+	   
+	   if(user.getType().equals("admin"))
+		   adminUser = true;
+   }
 %>
 
 <body>
@@ -40,23 +55,23 @@
 				    <% }
 				       else { 	%>					    
 						<li class="nav-item p-1 ms-4">
-		          			<a class="nav-link" href="homepage"><strong>Libreria</strong></a>
+		          			<a class="nav-link" href="homepage" data-bs-toggle="tooltip" title="Vai alla libreria"><strong>Libreria</strong></a>
 		        		</li>
 		        		<li class="nav-item dropdown p-1 ms-4">
 		          			<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false"><strong>Challenge</strong></a>
 	          				<ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-								<li><a class="dropdown-item" href="challenge"><strong>Classifiche</strong></a></li>
-	            				<li><a class="dropdown-item" href="createChallenge"><strong>Crea una challenge</strong></a></li>
+								<li><a class="dropdown-item" href="challenge" data-bs-toggle="tooltip" title="Vai all'elenco delle challenge"><strong>Classifiche</strong></a></li>
+	            				<li><a class="dropdown-item" href="createChallenge" data-bs-toggle="tooltip" title="Crea una nuova challenge"><strong>Crea una challenge</strong></a></li>
 	            			</ul>			          
 		        		</li>
 		        	<% } %>
 			      </ul>
 		      	  <ul class="navbar-nav ml-auto p-1">
 			        <li class="nav-item p-1">
-			          <a class="nav-link" href="user-profile"><strong><%= userName %></strong></a>
+			          <a class="nav-link" href="user-profile" data-bs-toggle="tooltip" title="Vai al tuo profilo"><strong><%= userName %></strong></a>
 			        </li>
 			        <li class="nav-item p-1 ms-4 me-2">
-			           <a class="nav-link" href="javascript:logout()"><strong>Logout</strong></a>
+			           <a class="nav-link" href="javascript:logout()" data-bs-toggle="tooltip" title="Esci dall'applicazione"><strong>Logout</strong></a>
 			        </li>
 			      </ul>
 			    </div>
@@ -83,7 +98,7 @@
 		    </div>
 		  </div>
 		  
-		   <form id="logoutForm" action="logout" method="post">
+		   <form id="logoutForm" action="logout" method="get">
 		   </form>
 		
 		<script type="text/javascript">
