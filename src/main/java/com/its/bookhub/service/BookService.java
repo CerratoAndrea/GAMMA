@@ -19,7 +19,7 @@ public class BookService {
 	}
 	
 	public List<Book> findAll(long id_utente) {
-	 	return bookRepository.findAll(id_utente);
+	 	return bookRepository.findAlluserBooks(id_utente);
 	}
 	
 	public List<Book> findAllDeletable(){

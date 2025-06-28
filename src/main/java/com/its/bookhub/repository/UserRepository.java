@@ -7,6 +7,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
 import com.its.bookhub.BookHubApplication;
+import com.its.bookhub.mapper.UserIdMapper;
 import com.its.bookhub.mapper.UserMapper;
 import com.its.bookhub.mapper.UserRankMapper;
 import com.its.bookhub.model.User;
@@ -78,6 +79,7 @@ public class UserRepository {
 				return null;
 			}
 	 }
+	 
 	 public List<UserRank> findByChallenge(Long ch_id) {
 		 	String query = "SELECT * FROM USERS JOIN USER_CHALLENGE ON id = user_id "
 		 				 + "WHERE challenge_id = ? ";		 	
@@ -85,5 +87,13 @@ public class UserRepository {
 	                                              new UserRankMapper(),
 	                                              new Object[]{ch_id});
 		 	return users;
+	 }
+	 
+	 public Long findUserIdByChId(Long chId, Long idUser) {
+		 String query = "SELECT USER_ID FROM user_challenge WHERE challenge_id = ? and user_id = ?";
+		 Long userId = jdbcTemplate.queryForObject(query,
+                 new UserIdMapper(),
+                 new Object[]{chId, idUser});
+		 return userId;
 	 }
 }

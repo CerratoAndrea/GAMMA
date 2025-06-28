@@ -33,7 +33,7 @@
 					  <div class="book-card mb-4" style="width:100%">
 		                <div class="card-header row gray" style="height:60px">
 		                	<div class="col-6" >
-		                		<a href="visChallenge" class="badge red" style="height:40px"><h5>${ch.title}</h5></a>
+		                		<a href="visChallenge?id=${ch.id}" class="badge red" style="height:40px"><h5>${ch.title}</h5></a>
 		                	</div>			 
 		                	<div class="col-6" >
 		                	   <div>		                		

@@ -1,5 +1,6 @@
 package com.its.bookhub.repository;
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -95,7 +96,18 @@ public class ChallengeRepository {
         return jdbcTemplate.update(query, ch_id, user_id);
     }
     
+    public int create(String description, String title, Date endDate) {
+        String query = "INSERT INTO challenges(description, title, end_date) VALUES (?,?,?)";
+       
+        return jdbcTemplate.update(query,
+        		description, title, endDate);
+    }
     
+    public Challenge findByAll(String description, String title, Date endDate) {
+        String query = "SELECT * FROM CHALLENGES WHERE description = ? and title = ? and end_date = ?;";
+       
+        return jdbcTemplate.queryForObject(query, new ChallengeMapper(), description, title, endDate);
+    }
     
     
 }

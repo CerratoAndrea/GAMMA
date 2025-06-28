@@ -90,7 +90,7 @@
 		    					<div class="col m-0"  >
 		      						<div class="card mx-auto mb-4" style="width:200px;">
 				  						<div class="card-body image-wrapper">
-											<img src="img/${book.image}" alt="${book.title}" width="100%" height="100%" border="1"  >
+											<img src="${book.image}" alt="${book.title}" width="100%" height="100%" border="1"  >
 										</div>
 				  						<div class="card-body pt-0">
 				    						<a href="javascript:apriDettaglioLibro(${book.id})" ><h6 class="card-title">${book.title}</h6></a>
@@ -128,7 +128,7 @@
 			$('#dettYear').html('<strong>Anno:</strong> '+$('#bookYear'+bookId).val());			
 			$('#dettPages').html('<strong>Pagine:</strong> '+$('#bookPages'+bookId).val());
 			$('#dettSummary').html($('#bookSummary'+bookId).val());
-			$('#dettImg').attr("src",'img/'+$('#bookImg'+bookId).val());
+			$('#dettImg').attr("src",$('#bookImg'+bookId).val());
 			 
 			$('#dettaglioLibro').modal("show");
 		};

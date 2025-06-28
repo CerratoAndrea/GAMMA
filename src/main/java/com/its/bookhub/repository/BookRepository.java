@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
+import com.its.bookhub.mapper.BookChallengeMapper;
 import com.its.bookhub.mapper.BookDelatableMapper;
 import com.its.bookhub.mapper.BookMapper;
 import com.its.bookhub.mapper.UserBookMapper;
@@ -25,11 +26,19 @@ public class BookRepository {
 	 	return book;
 	}
 	
-	public List<Book> findAll(long id_utente) {
+	public List<Book> findAlluserBooks(long id_utente) {
 	 	String query = "SELECT * FROM books AS b left join (select book_id, read from users_books WHERE user_id = ?) AS ub ON b.id = ub.book_id";		 	
 	 	List<Book> books = jdbcTemplate.query(query,
                                               new UserBookMapper(),
                                               new Object[]{id_utente});
+	 	return books;
+	}
+	
+	public List<Book> findAll() {
+		String query = "SELECT * FROM books";		 	
+	 	List<Book> books = jdbcTemplate.query(query,
+                                              new BookMapper(),
+                                              new Object[]{});
 	 	return books;
 	}
 	
@@ -43,7 +52,7 @@ public class BookRepository {
 	
 	public List<Book> findByTitle(String title, long id_utente) {
 		if(title == null) {
-			return findAll(id_utente);
+			return findAlluserBooks(id_utente);
 		}
 		String query = "SELECT * FROM books AS b left join (select book_id, read from users_books WHERE user_id = ?) AS ub ON b.id = ub.book_id "+
                        "WHERE LOWER(b.TITLE) LIKE ?";	
@@ -57,7 +66,7 @@ public class BookRepository {
 	
 	public List<Book> findByAuthor(String author, long id_utente) {
 		if(author == null) {
-			return findAll( id_utente);
+			return findAlluserBooks( id_utente);
 		}
 		String query = "SELECT * FROM books AS b left join (select book_id, read from users_books WHERE user_id = ?) AS ub ON b.id = ub.book_id "+
                        "WHERE LOWER(b.AUTHOR) LIKE ?";		 	
@@ -140,6 +149,22 @@ public class BookRepository {
 	     return jdbcTemplate.update(query,
 	    		 					title, author, image, type, summary, year, pages);
 	 }
+	public int addBookChallenge( Long chId, Long bookId) {
+		String query = "INSERT INTO challenge_book(challenge_id, book_id) VALUES (?, ?);";
+		 return jdbcTemplate.update(query,
+				 					chId, bookId);
+	}	
 	
-	
+	public List<Book> findByChallenge(long chId) {
+		
+		String query = "SELECT b.*, cbu.user_id " 
+				+ "FROM books AS b "
+				+ "  join challenge_book AS cb ON b.id = cb.book_id "
+				+ "  left join challenge_book_user as cbu on cb.challenge_id = cbu.challenge_id and cb.book_id = cbu.book_id "
+				+ "WHERE cb.challenge_id = ?;";	
+	 	List<Book> books =  jdbcTemplate.query(query,
+	 										   new BookChallengeMapper(),
+	 										   new Object[]{chId});
+	 	return books;
+} 
 }

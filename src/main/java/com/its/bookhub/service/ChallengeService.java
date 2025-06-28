@@ -1,5 +1,6 @@
 package com.its.bookhub.service;
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -61,4 +62,32 @@ public class ChallengeService {
 		 
 		 challengeRepository.leaveChallenge(user_id, ch_id);
 	 }
-}
+	 
+	 public List<Book> findAll() {
+		 return bookRepository.findAll();	 }
+	 
+	 public int createChallenge(String description, String title, Date endDate) {
+		 return challengeRepository.create(description,title,endDate);	
+	 }
+	 
+	 public int addBookChallenge( Long chId, Long bookId) {
+		 return bookRepository.addBookChallenge(chId, bookId);
+	 }
+	 public Challenge findAfterCreation(String description, String title, Date endDate) {
+		 return challengeRepository.findByAll(description,title,endDate);	
+	 }
+	 
+	 public List<Book> findBookByChallenge(long chId) {
+		 return bookRepository.findByChallenge(chId);
+	 }
+	 
+	 public Long findUserIdByChId(Long chId, Long idUser) {
+		 return userRepository.findUserIdByChId(chId, idUser);
+	 }
+	 
+	 
+	}
+	
+
+
+
