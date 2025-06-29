@@ -90,10 +90,15 @@ public class UserRepository {
 	 }
 	 
 	 public Long findUserIdByChId(Long chId, Long idUser) {
-		 String query = "SELECT USER_ID FROM user_challenge WHERE challenge_id = ? and user_id = ?";
-		 Long userId = jdbcTemplate.queryForObject(query,
-                 new UserIdMapper(),
-                 new Object[]{chId, idUser});
-		 return userId;
+		 try {
+			 String query = "SELECT USER_ID FROM user_challenge WHERE challenge_id = ? and user_id = ?";
+			 Long userId = jdbcTemplate.queryForObject(query,
+	                 new UserIdMapper(),
+	                 new Object[]{chId, idUser});
+			 return userId;
+		} catch (Exception e) {
+			return null;
+		}
+		
 	 }
 }

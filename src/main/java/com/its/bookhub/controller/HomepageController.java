@@ -102,6 +102,19 @@ public class HomepageController {
    
     }
     
+    @PostMapping("/reading_book")
+    public String booksReading(ModelMap model, 
+			   				HttpSession session, 
+			   				@RequestParam(required = true) Long bookId){
+    	
+    	User user = (User)session.getAttribute("user");
+    	bookService.updateBookReading(bookId, false);
+    	
+    	
+    	return homepage(model, session, null, null);
+   
+    }
+    
     private boolean isEmpty(String value) {
     	if(value == null || value.trim().equals("")) {
     		return true;

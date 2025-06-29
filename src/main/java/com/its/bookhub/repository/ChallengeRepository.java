@@ -80,12 +80,111 @@ public class ChallengeRepository {
     			+ "			user_challenge "
     			+ "		where "
     			+ "			user_id = ?"
-    			+ "	) as usch on c.id = usch.challenge_id";		 	
+    			+ "	) as usch on c.id = usch.challenge_id "
+    			+ "ORDER BY c.id desc";		 	
 	 	List<Challenge> challenges = jdbcTemplate.query(query,
                                               new ExtendedChallengeMapper(),
                                               new Object[]{user_id});
 	 	return challenges;
 	}
+    
+    public List<Challenge> getUserChallenges(long user_id) {
+    	String query = "select "
+    			+ "	c.*, "
+    			+ "	ch_count.users, "
+    			+ "	usch.user_id "
+    			+ "from "
+    			+ "	challenges as c "
+    			+ "	left join ( "
+    			+ "		select "
+    			+ "			challenge_id, "
+    			+ "			count(*) as users "
+    			+ "		from "
+    			+ "			user_challenge "
+    			+ "		group by "
+    			+ "			challenge_id "
+    			+ "	) as ch_count on c.id = ch_count.challenge_id "
+    			+ "	join ( "
+    			+ "		select "
+    			+ "			* "
+    			+ "		from "
+    			+ "			user_challenge "
+    			+ "		where "
+    			+ "			user_id = ?"
+    			+ "	) as usch on c.id = usch.challenge_id "
+    			+ "ORDER BY c.id desc";		 			 	
+	 	List<Challenge> challenges = jdbcTemplate.query(query,
+                                              new ExtendedChallengeMapper(),
+                                              new Object[]{user_id});
+	 	return challenges;
+	}
+    
+    public List<Challenge> getClosedChallenges(long user_id) {
+    	String query = "select "
+    			+ "	c.*, "
+    			+ "	ch_count.users, "
+    			+ "	usch.user_id "
+    			+ "from "
+    			+ "	challenges as c "
+    			+ "	left join ( "
+    			+ "		select "
+    			+ "			challenge_id, "
+    			+ "			count(*) as users "
+    			+ "		from "
+    			+ "			user_challenge "
+    			+ "		group by "
+    			+ "			challenge_id "
+    			+ "	) as ch_count on c.id = ch_count.challenge_id "
+    			+ "	left join ( "
+    			+ "		select "
+    			+ "			* "
+    			+ "		from "
+    			+ "			user_challenge "
+    			+ "		where "
+    			+ "			user_id = ?"
+    			+ "	) as usch on c.id = usch.challenge_id "
+    			+ "Where c.end_date < current_date "	
+    	 		+ "ORDER BY c.id desc";		 	
+	 	List<Challenge> challenges = jdbcTemplate.query(query,
+                                              new ExtendedChallengeMapper(),
+                                              new Object[]{user_id});
+	 	return challenges;
+	}
+    
+    public List<Challenge> getOpenChallenges(long user_id) {
+    	String query = "select "
+    			+ "	c.*, "
+    			+ "	ch_count.users, "
+    			+ "	usch.user_id "
+    			+ "from "
+    			+ "	challenges as c "
+    			+ "	left join ( "
+    			+ "		select "
+    			+ "			challenge_id, "
+    			+ "			count(*) as users "
+    			+ "		from "
+    			+ "			user_challenge "
+    			+ "		group by "
+    			+ "			challenge_id "
+    			+ "	) as ch_count on c.id = ch_count.challenge_id "
+    			+ "	left join ( "
+    			+ "		select "
+    			+ "			* "
+    			+ "		from "
+    			+ "			user_challenge "
+    			+ "		where "
+    			+ "			user_id = ?"
+    			+ "	) as usch on c.id = usch.challenge_id "
+    			+ "Where c.end_date >= current_date "
+    	      	+ "ORDER BY c.id desc";		 	
+	 	List<Challenge> challenges = jdbcTemplate.query(query,
+                                              new ExtendedChallengeMapper(),
+                                              new Object[]{user_id});
+	 	return challenges;
+	}
+    
+    
+    
     
     public int joinChallenge(Long user_id, Long ch_id) {
         String query = "INSERT INTO user_challenge(user_id, challenge_id) VALUES(?, ?)";
@@ -109,5 +208,16 @@ public class ChallengeRepository {
         return jdbcTemplate.queryForObject(query, new ChallengeMapper(), description, title, endDate);
     }
     
+    public int deleteChallengeUserBooks(Long chId, Long userId) {
+        String query = "delete from challenge_book_user WHERE challenge_id = ? and user_id = ?";
+       
+        return jdbcTemplate.update(query,
+        		chId, userId);
+    }
+    public int addChallengeUserBook( Long chId, Long bookId, Long  userId) {
+		String query = "INSERT INTO challenge_book_user(challenge_id, book_id, user_id) VALUES (?, ?, ?)";
+		 return jdbcTemplate.update(query,
+				 					chId, bookId, userId);
+	}	
     
 }

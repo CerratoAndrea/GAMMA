@@ -23,8 +23,22 @@ public class ChallengeService {
 	@Autowired
 	BookRepository bookRepository;
 	
-	public List<Challenge> getChallenges(Long user_id) {
-		return challengeRepository.getChallenges(user_id);
+	public List<Challenge> getChallenges(Long user_id, String type) {
+			
+		switch (type) {
+		case "tutte":
+			return challengeRepository.getChallenges(user_id);
+		case "mie":
+			return challengeRepository.getUserChallenges(user_id);
+		case "aperte":
+			return challengeRepository.getOpenChallenges(user_id);
+		case "chiuse":
+			return challengeRepository.getClosedChallenges(user_id);
+		default:
+			return challengeRepository.getChallenges(user_id);
+		}
+			
+			
 	}
 	public List<UserRank> findByChallenge(Long challenge_id){
 		return userRepository.findByChallenge(challenge_id);
@@ -77,14 +91,20 @@ public class ChallengeService {
 		 return challengeRepository.findByAll(description,title,endDate);	
 	 }
 	 
-	 public List<Book> findBookByChallenge(long chId) {
-		 return bookRepository.findByChallenge(chId);
+	 public List<Book> findBookByChallenge(long userId, long chId) {
+		 return bookRepository.findByChallenge(userId, chId);
 	 }
 	 
 	 public Long findUserIdByChId(Long chId, Long idUser) {
 		 return userRepository.findUserIdByChId(chId, idUser);
 	 }
 	 
+	 public int deleteChallengeUserBooks(Long userId, Long chId) {
+		 return challengeRepository.deleteChallengeUserBooks(chId, userId);	
+	 }
+	 public int addChallengeUserBook( Long chId, Long bookId, Long  userId) {
+		 return challengeRepository.addChallengeUserBook(chId, bookId,userId);	
+	 }
 	 
 	}
 	

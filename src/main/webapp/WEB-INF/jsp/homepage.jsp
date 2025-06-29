@@ -43,6 +43,7 @@
 		        <button id="dettaglioAggiungiButton" type="button" class="btn btn-primary">Aggiungi alla tua libreria</button>
 		        <button id="dettaglioEliminaButton" type="button" class="btn btn-primary">Togli dalla tua libreria</button>
 		        <button id="dettaglioLettoButton" type="button" class="btn btn-primary">Letto</button>
+		        <button id="dettaglioInLetturaButton" type="button" class="btn btn-primary">Ritorna in lettura</button>
 		        <button id ="dettaglioCloseButton" type="button" class="btn btn-secondary" data-dismiss="modal">Chiudi</button>		        
 		      </div>
 		    </div>
@@ -186,7 +187,7 @@
 			else if(read == 'true'){
 				$("#dettaglioAggiungiButton").hide();
 				$("#dettaglioEliminaButton").show();
-				$("#dettaglioInLetturaButton").hide();
+				$("#dettaglioInLetturaButton").show();
 				$("#dettaglioLettoButton").hide();
 			}
 			else{
@@ -217,6 +218,10 @@
 		
 		$('#dettaglioLettoButton').on('click', function (e) {	
 			$('#dettaglioForm').attr("action",'read_book');
+			$('#dettaglioForm').submit();
+		});
+		$('#dettaglioInLetturaButton').on('click', function (e) {	
+			$('#dettaglioForm').attr("action",'reading_book');
 			$('#dettaglioForm').submit();
 		});
 	</script>

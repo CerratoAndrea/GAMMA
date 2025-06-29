@@ -27,7 +27,7 @@ public class BookRepository {
 	}
 	
 	public List<Book> findAlluserBooks(long id_utente) {
-	 	String query = "SELECT * FROM books AS b left join (select book_id, read from users_books WHERE user_id = ?) AS ub ON b.id = ub.book_id";		 	
+	 	String query = "SELECT * FROM books AS b left join (select book_id, read from users_books WHERE user_id = ?) AS ub ON b.id = ub.book_id order by b.title";		 	
 	 	List<Book> books = jdbcTemplate.query(query,
                                               new UserBookMapper(),
                                               new Object[]{id_utente});
@@ -35,7 +35,7 @@ public class BookRepository {
 	}
 	
 	public List<Book> findAll() {
-		String query = "SELECT * FROM books";		 	
+		String query = "SELECT * FROM books  order by title";		 	
 	 	List<Book> books = jdbcTemplate.query(query,
                                               new BookMapper(),
                                               new Object[]{});
@@ -55,7 +55,7 @@ public class BookRepository {
 			return findAlluserBooks(id_utente);
 		}
 		String query = "SELECT * FROM books AS b left join (select book_id, read from users_books WHERE user_id = ?) AS ub ON b.id = ub.book_id "+
-                       "WHERE LOWER(b.TITLE) LIKE ?";	
+                       "WHERE LOWER(b.TITLE) LIKE ?  order by b.title";	
 	 	
 	 	List<Book> books = jdbcTemplate.query(query,
                 new UserBookMapper(),
@@ -69,7 +69,7 @@ public class BookRepository {
 			return findAlluserBooks( id_utente);
 		}
 		String query = "SELECT * FROM books AS b left join (select book_id, read from users_books WHERE user_id = ?) AS ub ON b.id = ub.book_id "+
-                       "WHERE LOWER(b.AUTHOR) LIKE ?";		 	
+                       "WHERE LOWER(b.AUTHOR) LIKE ?  order by b.title";		 	
 	 	List<Book> books = jdbcTemplate.query(query,
                 new UserBookMapper(),
 	 			new Object[]{id_utente, "%" + author.toLowerCase() + "%"});
@@ -78,7 +78,7 @@ public class BookRepository {
 	
 	public List<Book> findByAuthorAndTitle(String author, String title, Long id_utente) {
 	 	String query = "SELECT * FROM books AS b left join (select book_id, read from users_books WHERE user_id = ?) AS ub ON b.id = ub.book_id "+
-	                   "WHERE LOWER(b.AUTHOR) LIKE ? AND LOWER(b.TITLE) LIKE ?";		 	
+	                   "WHERE LOWER(b.AUTHOR) LIKE ? AND LOWER(b.TITLE) LIKE ?  order by b.title";		 	
 	 	List<Book> books = jdbcTemplate.query(query,
                 new UserBookMapper(),
 	 			new Object[]{id_utente, "%" + author.toLowerCase() + "%", "%" + title.toLowerCase() + "%"});
@@ -87,7 +87,7 @@ public class BookRepository {
 	
 	public List<Book> findByUser(long id_utente) {
 		
-			String query = "SELECT * FROM books AS b join users_books AS ub ON b.id = ub.book_id WHERE ub.user_id = ?";	
+			String query = "SELECT * FROM books AS b join users_books AS ub ON b.id = ub.book_id WHERE ub.user_id = ?  order by b.title";	
 		 	List<Book> books =  jdbcTemplate.query(query,
 		 										   new UserBookMapper(),
 		 										   new Object[]{id_utente});
@@ -131,7 +131,7 @@ public class BookRepository {
 	public List<Book> getChallengeUserBooks(long id_utente, long ch_id) {
 		
 		String query = "SELECT * FROM BOOKS Inner JOIN challenge_book_user ON id = book_id "
-				 				 + "WHERE challenge_id = ? and user_id = ?";
+				 				 + "WHERE challenge_id = ? and user_id = ?  order by title";
 	 	List<Book> books =  jdbcTemplate.query(query,
 	 										   new BookMapper(),
 	 										   new Object[]{ch_id, id_utente});
@@ -155,16 +155,16 @@ public class BookRepository {
 				 					chId, bookId);
 	}	
 	
-	public List<Book> findByChallenge(long chId) {
+	public List<Book> findByChallenge(long userId, long chId) {
 		
 		String query = "SELECT b.*, cbu.user_id " 
 				+ "FROM books AS b "
 				+ "  join challenge_book AS cb ON b.id = cb.book_id "
-				+ "  left join challenge_book_user as cbu on cb.challenge_id = cbu.challenge_id and cb.book_id = cbu.book_id "
-				+ "WHERE cb.challenge_id = ?;";	
+				+ "  left join (select * from challenge_book_user where user_id=?) as cbu on cb.challenge_id = cbu.challenge_id and cb.book_id = cbu.book_id "
+				+ "WHERE cb.challenge_id = ?  order by b.title";	
 	 	List<Book> books =  jdbcTemplate.query(query,
 	 										   new BookChallengeMapper(),
-	 										   new Object[]{chId});
+	 										   new Object[]{userId, chId});
 	 	return books;
 } 
 }

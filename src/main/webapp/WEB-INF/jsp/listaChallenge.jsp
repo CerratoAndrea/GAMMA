@@ -1,5 +1,6 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
+<%@ taglib prefix = "fmt" uri = "http://java.sun.com/jsp/jstl/fmt" %>
 <link href="css/styleChallengePage.css" rel="stylesheet">
 <%@include file="navbar.jsp" %>
 	    
@@ -55,7 +56,7 @@
 		                <div class="card-body fst-italic">${ch.description}</div>
 		                <div class="card-body row">
 		                	<div class="col-6" ><strong>${ch.numUsers} Partecipanti</strong></div>
-		                    <div class="col-6 text-end"><strong>Termina il ${ch.endDate}</strong></div>
+		                    <div class="col-6 text-end"><strong>Termina il <fmt:formatDate pattern = "dd/MM/yyyy"  value = "${ch.endDate}" /></strong></div>
 		                 </div>               
 		              </div>
 		              </c:forEach>
@@ -104,6 +105,9 @@
 	
 	<script type="text/javascript">
 	
+		$(document).ready(function(){
+			$('#type').val('${filtro}');
+		});
 		function classifica(idChallenge){
 			$('#challengeId').val(idChallenge);
 			$('#challengeForm').attr("action",'challenge');

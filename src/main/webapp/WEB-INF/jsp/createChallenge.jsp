@@ -23,8 +23,11 @@
 					      <div class="row pb-4">
 					      	<div id="dettYear"></div>
 					      </div>
-					      <div class="row ">
+					      <div class="row pb-4">
 					      	<div id="dettPages"></div>
+					      </div>
+					      <div class="row">
+					      	<div id="dettType"></div>
 					      </div>
 					      
 					      <form id="dettaglioForm" action="" method="post">
@@ -108,6 +111,7 @@
 									<input type="hidden" id="bookPages${book.id}" value="${book.pages}"/>
 									<input type="hidden" id="bookImg${book.id}" value="${book.image}"/>
 									<input type="hidden" id="bookRead${book.id}" value="${book.read}"/>
+									<input type="hidden" id="bookType${book.id}" value="${book.type}"/>
 		    					</div>	 
 		    				</c:forEach>
 	  					</div>
@@ -129,6 +133,7 @@
 			$('#dettPages').html('<strong>Pagine:</strong> '+$('#bookPages'+bookId).val());
 			$('#dettSummary').html($('#bookSummary'+bookId).val());
 			$('#dettImg').attr("src",$('#bookImg'+bookId).val());
+			$('#dettType').html('<strong>Genere:</strong> '+$('#bookType'+bookId).val());
 			 
 			$('#dettaglioLibro').modal("show");
 		};
