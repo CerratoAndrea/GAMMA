@@ -39,7 +39,6 @@ INSERT INTO users_books (user_id, book_id, read) VALUES (4, 8, false);
 
 INSERT INTO challenges(id, description, title, end_date) VALUES (1, 'I migliori libri del 900', 'Classici del 900', '10-05-2025');
 INSERT INTO challenges(id, description, title, end_date) VALUES (2, 'I migliori Horror della storia', 'Best Horror',  '31-08-2025');
-INSERT INTO challenges(id, description, title, end_date) VALUES (3, 'I grandi capolavori Italiani', 'I Grandi Italiani', '31-12-2026');
 INSERT INTO challenges(id, description, title, end_date) VALUES (4, 'I migliori libri della storia', 'I migliori libri della storia', '31-07-2026');
 
 INSERT INTO challenge_book(challenge_id, book_id) VALUES (1, 1);
@@ -51,10 +50,6 @@ INSERT INTO challenge_book(challenge_id, book_id) VALUES (2, 8);
 INSERT INTO challenge_book(challenge_id, book_id) VALUES (2, 7);
 INSERT INTO challenge_book(challenge_id, book_id) VALUES (4, 4);
 INSERT INTO challenge_book(challenge_id, book_id) VALUES (4, 8);
-INSERT INTO challenge_book(challenge_id, book_id) VALUES (3, 1);
-INSERT INTO challenge_book(challenge_id, book_id) VALUES (3, 2);
-INSERT INTO challenge_book(challenge_id, book_id) VALUES (3, 3);
-INSERT INTO challenge_book(challenge_id, book_id) VALUES (3, 4);
 
 INSERT INTO user_challenge(user_id, challenge_id) VALUES (1, 1);
 INSERT INTO user_challenge(user_id, challenge_id) VALUES (2, 1);

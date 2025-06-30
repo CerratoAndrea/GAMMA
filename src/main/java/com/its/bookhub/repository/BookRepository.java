@@ -43,7 +43,7 @@ public class BookRepository {
 	}
 	
 	public List<Book> findAllDeletable() {
-	 	String query = "select * from books left join challenge_book on id = book_id;";		 	
+		String query = "select distinct id, title, author, image, summary, year, pages, type, book_id from books left join challenge_book on id = book_id order by books.title";			 	
 	 	List<Book> books = jdbcTemplate.query(query,
                                               new BookDelatableMapper(),
                                               new Object[] {});
